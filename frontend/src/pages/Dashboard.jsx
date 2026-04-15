@@ -6,6 +6,7 @@ import { LeadCard } from "../components/LeadCard";
 import { MetricsPanel } from "../components/MetricsPanel";
 import { LeadDetail } from "../components/LeadDetail";
 import { BookCallModal } from "../components/BookCallModal";
+import { SetupGate } from "../components/SetupGate";
 import { MessageSquare, Phone, Filter, Settings, LogOut, Calendar } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { useFeatures } from "../hooks/useFeatures";
@@ -68,8 +69,16 @@ export function Dashboard() {
   const filteredLeads =
     filter === "all" ? leads : leads.filter((l) => l.status === filter);
 
+  const setupBooked =
+    typeof window !== "undefined" &&
+    localStorage.getItem("aoa_setup_booked") === "true";
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Setup gate — blurs everything until user books a call */}
+      <SetupGate />
+
+      <div className={setupBooked ? "" : "blur-sm pointer-events-none select-none"}>
       {/* Header */}
       <header className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -176,10 +185,11 @@ export function Dashboard() {
         />
       )}
 
-      {/* Book call modal */}
+      {/* Book call modal (header button, post-setup) */}
       {showBookModal && (
         <BookCallModal onClose={() => setShowBookModal(false)} />
       )}
+      </div>
     </div>
   );
 }
