@@ -1,7 +1,7 @@
-import { supabase } from "../config/supabase.js";
+import { getSupabase } from "../config/supabase.js";
 import { generateDepositLink } from "../services/solana-pay.js";
+import { authMiddleware } from "../middleware/auth.js";
 
-// Default deposit amounts by urgency (in USDC)
 const DEPOSIT_AMOUNTS = {
   emergency: 50,
   high: 30,
@@ -10,15 +10,19 @@ const DEPOSIT_AMOUNTS = {
 };
 
 export async function paymentsRoutes(app) {
+  app.addHook("preHandler", authMiddleware);
+
   // Generate a Solana Pay deposit link for a lead
   app.post("/create-deposit", async (request, reply) => {
+    const supabase = getSupabase();
     const { leadId, amount } = request.body;
 
-    // Get the lead
+    // Verify lead belongs to user's business
     const { data: lead, error } = await supabase
       .from("leads")
       .select("*")
       .eq("id", leadId)
+      .eq("business_id", request.businessId)
       .single();
 
     if (error || !lead) {
@@ -43,10 +47,9 @@ export async function paymentsRoutes(app) {
       merchantWallet,
       amount: depositAmount,
       leadId: lead.id,
-      businessName: "ClimaTech Refrigeração",
+      businessName: request.business?.name || "AOA",
     });
 
-    // Save deposit info to lead
     await supabase
       .from("leads")
       .update({
@@ -66,7 +69,18 @@ export async function paymentsRoutes(app) {
 
   // Manually confirm a deposit (for demo purposes)
   app.post("/confirm-deposit", async (request, reply) => {
+    const supabase = getSupabase();
     const { leadId, txSignature } = request.body;
+
+    // Verify ownership
+    const { data: existing } = await supabase
+      .from("leads")
+      .select("id")
+      .eq("id", leadId)
+      .eq("business_id", request.businessId)
+      .single();
+
+    if (!existing) return reply.status(404).send({ error: "Lead not found" });
 
     const { data, error } = await supabase
       .from("leads")

@@ -1,0 +1,43 @@
+import "../src/env.js";
+import Fastify from "fastify";
+import cors from "@fastify/cors";
+import { webhookRoutes } from "../src/routes/webhooks.js";
+import { leadsRoutes } from "../src/routes/leads.js";
+import { paymentsRoutes } from "../src/routes/payments.js";
+import { testChatRoutes } from "../src/routes/test-chat.js";
+
+const app = Fastify({ logger: true });
+
+const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
+  .split(",")
+  .map((s) => s.trim());
+
+await app.register(cors, {
+  origin: allowedOrigins,
+  credentials: true,
+});
+
+// Health check
+app.get("/health", async () => ({
+  status: "ok",
+  service: "aoa-backend",
+  timestamp: new Date().toISOString(),
+}));
+
+app.get("/api/health", async () => ({
+  status: "ok",
+  service: "aoa-backend",
+  timestamp: new Date().toISOString(),
+}));
+
+// Register routes
+app.register(webhookRoutes, { prefix: "/api/webhooks" });
+app.register(leadsRoutes, { prefix: "/api/leads" });
+app.register(paymentsRoutes, { prefix: "/api/payments" });
+app.register(testChatRoutes, { prefix: "/api/test-chat" });
+
+await app.ready();
+
+export default async (req, res) => {
+  app.server.emit("request", req, res);
+};

@@ -5,22 +5,7 @@ import {
   parseEvolutionWebhook,
 } from "../services/evolution.js";
 
-// Helper to get business config from Supabase
-async function getBusinessByInstanceName(instanceName) {
-  const supabase = getSupabase();
-  if (!supabase) return null;
-
-  const { data } = await supabase
-    .from("businesses")
-    .select("*")
-    .eq("whatsapp_instance", instanceName)
-    .single()
-    .catch(() => ({ data: null }));
-
-  return data;
-}
-
-// Demo business fallback
+// Demo business fallback (for testing without a real client)
 const DEFAULT_BUSINESS = {
   id: "00000000-0000-0000-0000-000000000001",
   name: "ClimaTech Refrigeração",
@@ -35,8 +20,38 @@ const DEFAULT_BUSINESS = {
   service_area: "São Paulo — Zona Sul e Centro",
   business_hours: { start: "08:00", end: "18:00" },
   ai_prompt_context: `ClimaTech Refrigeração é uma empresa familiar com 8 anos de experiência em ar-condicionado residencial e comercial na zona sul de São Paulo. Trabalhamos com todas as marcas. Visita técnica custa R$150, descontada do serviço. Instalação de split a partir de R$800. Manutenção preventiva R$250. Atendemos emergências 24h com taxa adicional de R$200.`,
-  solana_wallet_address: process.env.SOLANA_MERCHANT_WALLET,
 };
+
+/**
+ * Look up business by Evolution API instance name or WhatsApp number
+ */
+async function findBusiness(instanceName, toNumber) {
+  const supabase = getSupabase();
+  if (!supabase) return null;
+
+  // Try by instance name first
+  if (instanceName) {
+    const { data } = await supabase
+      .from("businesses")
+      .select("*")
+      .eq("whatsapp_instance", instanceName)
+      .single();
+    if (data) return data;
+  }
+
+  // Fallback: try by WhatsApp number
+  if (toNumber) {
+    const cleaned = toNumber.replace(/\D/g, "");
+    const { data } = await supabase
+      .from("businesses")
+      .select("*")
+      .eq("whatsapp_number", cleaned)
+      .single();
+    if (data) return data;
+  }
+
+  return null;
+}
 
 export async function webhookRoutes(app) {
   /**
@@ -49,25 +64,30 @@ export async function webhookRoutes(app) {
 
       const { phoneNumber, text, isAudio } = parsed;
 
+      // Extract instance from webhook payload
+      const instanceName =
+        request.body.instance?.instanceName ||
+        request.body.instance ||
+        request.body.instanceName ||
+        process.env.EVOLUTION_INSTANCE_NAME;
+
+      // Find the business for this WhatsApp instance
+      const business = (await findBusiness(instanceName, null)) || DEFAULT_BUSINESS;
+
       // If it's an audio message, ask for text
       if (isAudio) {
         await sendWhatsAppMessage(
           phoneNumber,
-          "Desculpe, ainda não consigo ouvir áudios 😅 Poderia enviar sua mensagem por texto?"
+          "Desculpe, ainda não consigo ouvir áudios 😅 Poderia enviar sua mensagem por texto?",
+          instanceName
         );
         return reply.status(200).send({ ok: true });
       }
 
       const supabase = getSupabase();
       if (!supabase) {
-        return reply.status(500).send({ error: "Supabase not configured" });
+        return reply.status(500).send({ error: "Database not configured" });
       }
-
-      // Get business config (from instance name or use demo)
-      const business =
-        (await getBusinessByInstanceName(
-          process.env.EVOLUTION_INSTANCE_NAME
-        )) || DEFAULT_BUSINESS;
 
       // Find or create lead
       let { data: lead } = await supabase
@@ -78,8 +98,7 @@ export async function webhookRoutes(app) {
         .in("status", ["new", "qualifying"])
         .order("created_at", { ascending: false })
         .limit(1)
-        .single()
-        .catch(() => ({ data: null }));
+        .maybeSingle();
 
       if (!lead) {
         const { data: newLead } = await supabase
@@ -110,7 +129,6 @@ export async function webhookRoutes(app) {
         .eq("lead_id", lead.id)
         .order("created_at", { ascending: true });
 
-      // Remove the last message (we already added it) to pass as history
       const conversationHistory = (history || []).slice(0, -1);
 
       // Process with Claude AI
@@ -150,7 +168,7 @@ export async function webhookRoutes(app) {
 
       // Send reply via WhatsApp
       if (aiReply) {
-        await sendWhatsAppMessage(phoneNumber, aiReply);
+        await sendWhatsAppMessage(phoneNumber, aiReply, instanceName);
       }
 
       return reply.status(200).send({ ok: true });
@@ -167,22 +185,25 @@ export async function webhookRoutes(app) {
     try {
       const payload = request.body;
 
-      // Vapi sends different event types
       if (payload.message?.type !== "end-of-call-report") {
         return reply.status(200).send({ ok: true });
       }
+
+      const supabase = getSupabase();
+      if (!supabase) return reply.status(500).send({ error: "Database not configured" });
 
       const report = payload.message;
       const phoneNumber = report.customer?.number;
       const summary = report.summary;
       const transcript = report.transcript;
 
-      // Extract structured data from the call summary using a simple parse
-      // In production, you'd send the transcript to Claude for extraction
+      // For Vapi, route by the assistant's phone number or use default
+      const business = DEFAULT_BUSINESS;
+
       const { data: lead } = await supabase
         .from("leads")
         .insert({
-          business_id: DEMO_BUSINESS.id,
+          business_id: business.id,
           channel: "voice",
           status: "qualified",
           contact_phone: phoneNumber,

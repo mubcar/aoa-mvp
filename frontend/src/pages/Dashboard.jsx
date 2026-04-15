@@ -18,7 +18,7 @@ const FILTERS = [
 
 export function Dashboard() {
   const { user, loading: authLoading } = useAuth();
-  const { leads, loading } = useRealtimeLeads();
+  const { leads, loading, business } = useRealtimeLeads();
   const [filter, setFilter] = useState("all");
   const [selectedLead, setSelectedLead] = useState(null);
   const navigate = useNavigate();
@@ -29,12 +29,19 @@ export function Dashboard() {
     }
   }, [user, authLoading, navigate]);
 
+  // Redirect to onboarding if no business
+  useEffect(() => {
+    if (!loading && user && !business) {
+      navigate("/onboarding");
+    }
+  }, [loading, user, business, navigate]);
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate("/");
   };
 
-  if (authLoading || !user) {
+  if (authLoading || loading || !user) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <p className="text-gray-500">Carregando...</p>
@@ -55,7 +62,7 @@ export function Dashboard() {
               AOA
               <span className="text-blue-600 ml-1">Dashboard</span>
             </h1>
-            <p className="text-sm text-gray-500">{user.email}</p>
+            <p className="text-sm text-gray-500">{business?.name || user.email}</p>
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-4 text-sm text-gray-500">
@@ -117,11 +124,7 @@ export function Dashboard() {
         </div>
 
         {/* Lead grid */}
-        {loading ? (
-          <div className="text-center py-12 text-gray-500">
-            Carregando leads...
-          </div>
-        ) : filteredLeads.length === 0 ? (
+        {filteredLeads.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500 mb-2">Nenhum lead ainda</p>
             <p className="text-sm text-gray-400">

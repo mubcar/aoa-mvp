@@ -8,12 +8,11 @@ const api = axios.create({
   },
 });
 
-const instance = process.env.EVOLUTION_INSTANCE_NAME;
-
 /**
- * Send a text message via WhatsApp
+ * Send a text message via WhatsApp (multi-tenant: instance per call)
  */
-export async function sendWhatsAppMessage(phoneNumber, text) {
+export async function sendWhatsAppMessage(phoneNumber, text, instanceName) {
+  const instance = instanceName || process.env.EVOLUTION_INSTANCE_NAME;
   try {
     const response = await api.post(`/message/sendText/${instance}`, {
       number: phoneNumber,

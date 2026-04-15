@@ -8,12 +8,39 @@ import { testChatRoutes } from "./routes/test-chat.js";
 
 const app = Fastify({ logger: true });
 
+// CORS — allow production frontend + localhost for dev
+const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
+  .split(",")
+  .map((s) => s.trim());
+
 await app.register(cors, {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: allowedOrigins,
+  credentials: true,
 });
 
-// Health check
-app.get("/health", async () => ({ status: "ok", service: "aoa-backend" }));
+// Health check (expanded for production monitoring)
+app.get("/health", async () => {
+  const checks = { status: "ok", service: "aoa-backend", timestamp: new Date().toISOString() };
+
+  // Check Supabase
+  try {
+    const { getSupabase } = await import("./config/supabase.js");
+    const sb = getSupabase();
+    if (sb) {
+      const { error } = await sb.from("businesses").select("id").limit(1);
+      checks.supabase = error ? "error" : "connected";
+    } else {
+      checks.supabase = "not configured";
+    }
+  } catch {
+    checks.supabase = "error";
+  }
+
+  // Check Claude API key
+  checks.claude = process.env.ANTHROPIC_API_KEY ? "configured" : "missing";
+
+  return checks;
+});
 
 // Register routes
 app.register(webhookRoutes, { prefix: "/api/webhooks" });
