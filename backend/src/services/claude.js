@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { buildSystemPrompt, qualifyLeadTool } from "../prompts/receptionist.js";
+import { features } from "../config/features.js";
 
 let _client = null;
 function getClient() {
@@ -13,8 +14,10 @@ function getClient() {
  * Process a prospect message through Claude AI
  * Returns: { reply: string, toolCall: object | null }
  */
-export async function processMessage(business, conversationHistory, newMessage) {
-  const systemPrompt = buildSystemPrompt(business);
+export async function processMessage(business, conversationHistory, newMessage, options = {}) {
+  const paymentEnabled =
+    options.paymentEnabled !== undefined ? options.paymentEnabled : features.SOLANA_ESCROW;
+  const systemPrompt = buildSystemPrompt(business, { paymentEnabled });
 
   // Build messages array from conversation history
   const messages = conversationHistory.map((msg) => ({

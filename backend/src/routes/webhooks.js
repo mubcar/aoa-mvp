@@ -4,6 +4,7 @@ import {
   sendWhatsAppMessage,
   parseEvolutionWebhook,
 } from "../services/evolution.js";
+import { features } from "../config/features.js";
 
 // Demo business fallback (for testing without a real client)
 const DEFAULT_BUSINESS = {
@@ -135,7 +136,8 @@ export async function webhookRoutes(app) {
       const { reply: aiReply, toolCall } = await processMessage(
         business,
         conversationHistory,
-        text
+        text,
+        { paymentEnabled: features.SOLANA_ESCROW }
       );
 
       // Save assistant message
@@ -169,6 +171,40 @@ export async function webhookRoutes(app) {
       // Send reply via WhatsApp
       if (aiReply) {
         await sendWhatsAppMessage(phoneNumber, aiReply, instanceName);
+      }
+
+      // Optionally generate & send Solana Pay deposit link after qualification
+      if (toolCall && features.SOLANA_ESCROW) {
+        try {
+          const { generateDepositLink } = await import("../services/solana-pay.js");
+          const merchantWallet = process.env.SOLANA_MERCHANT_WALLET;
+          if (merchantWallet) {
+            const depositAmounts = { emergency: 50, high: 30, medium: 20, low: 15 };
+            const amount = depositAmounts[toolCall.urgency] || 20;
+            const deposit = generateDepositLink({
+              merchantWallet,
+              amount,
+              leadId: lead.id,
+              businessName: business.name,
+            });
+            await supabase
+              .from("leads")
+              .update({
+                deposit_amount_usdc: deposit.amount,
+                solana_pay_url: deposit.url,
+                status: "deposit_sent",
+                updated_at: new Date().toISOString(),
+              })
+              .eq("id", lead.id);
+            await sendWhatsAppMessage(
+              phoneNumber,
+              `Para garantir seu agendamento, aqui está o link de depósito: ${deposit.url}`,
+              instanceName
+            );
+          }
+        } catch (err) {
+          request.log.warn({ err }, "Failed to auto-generate deposit link");
+        }
       }
 
       return reply.status(200).send({ ok: true });

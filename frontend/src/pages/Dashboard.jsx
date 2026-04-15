@@ -5,22 +5,38 @@ import { useAuth } from "../hooks/useAuth";
 import { LeadCard } from "../components/LeadCard";
 import { MetricsPanel } from "../components/MetricsPanel";
 import { LeadDetail } from "../components/LeadDetail";
-import { MessageSquare, Phone, Filter, Settings, LogOut } from "lucide-react";
+import { BookCallModal } from "../components/BookCallModal";
+import { MessageSquare, Phone, Filter, Settings, LogOut, Calendar } from "lucide-react";
 import { supabase } from "../lib/supabase";
+import { useFeatures } from "../hooks/useFeatures";
 
-const FILTERS = [
+const BASE_FILTERS = [
   { key: "all", label: "Todos" },
   { key: "qualifying", label: "Qualificando" },
   { key: "qualified", label: "Qualificados" },
+];
+
+const SOLANA_FILTERS = [
   { key: "deposit_sent", label: "Depósito enviado" },
   { key: "deposit_paid", label: "Depósito pago" },
+];
+
+const NEUTRAL_FILTERS = [
+  { key: "job_scheduled", label: "Agendados" },
+  { key: "job_complete", label: "Concluídos" },
 ];
 
 export function Dashboard() {
   const { user, loading: authLoading } = useAuth();
   const { leads, loading, business } = useRealtimeLeads();
+  const { features } = useFeatures();
+  const FILTERS = [
+    ...BASE_FILTERS,
+    ...(features.solanaEscrow ? SOLANA_FILTERS : NEUTRAL_FILTERS),
+  ];
   const [filter, setFilter] = useState("all");
   const [selectedLead, setSelectedLead] = useState(null);
+  const [showBookModal, setShowBookModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -77,6 +93,13 @@ export function Dashboard() {
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               <span>Ao vivo</span>
             </div>
+            <button
+              onClick={() => setShowBookModal(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
+            >
+              <Calendar className="w-4 h-4" />
+              Agendar Chamada de Setup
+            </button>
             <div className="flex items-center gap-2 border-l border-gray-200 pl-4">
               <a
                 href="/settings"
@@ -151,6 +174,11 @@ export function Dashboard() {
           lead={selectedLead}
           onClose={() => setSelectedLead(null)}
         />
+      )}
+
+      {/* Book call modal */}
+      {showBookModal && (
+        <BookCallModal onClose={() => setShowBookModal(false)} />
       )}
     </div>
   );

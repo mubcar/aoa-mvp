@@ -1,6 +1,7 @@
 import { getSupabase } from "../config/supabase.js";
 import { generateDepositLink } from "../services/solana-pay.js";
 import { authMiddleware } from "../middleware/auth.js";
+import { features } from "../config/features.js";
 
 const DEPOSIT_AMOUNTS = {
   emergency: 50,
@@ -27,6 +28,18 @@ export async function paymentsRoutes(app) {
 
     if (error || !lead) {
       return reply.status(404).send({ error: "Lead not found" });
+    }
+
+    // Feature-flagged: when Solana escrow is off, just mark qualified and bail
+    if (!features.SOLANA_ESCROW) {
+      await supabase
+        .from("leads")
+        .update({ status: "qualified", updated_at: new Date().toISOString() })
+        .eq("id", leadId);
+      return {
+        mode: "none",
+        message: "Payment integration disabled",
+      };
     }
 
     if (lead.solana_pay_url) {
@@ -82,14 +95,22 @@ export async function paymentsRoutes(app) {
 
     if (!existing) return reply.status(404).send({ error: "Lead not found" });
 
+    // When Solana escrow is off, manual confirmation still works — just mark contacted
+    const updatePayload = features.SOLANA_ESCROW
+      ? {
+          status: "deposit_paid",
+          solana_tx_signature: txSignature || "demo-confirmed",
+          deposit_confirmed_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }
+      : {
+          status: "job_scheduled",
+          updated_at: new Date().toISOString(),
+        };
+
     const { data, error } = await supabase
       .from("leads")
-      .update({
-        status: "deposit_paid",
-        solana_tx_signature: txSignature || "demo-confirmed",
-        deposit_confirmed_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      })
+      .update(updatePayload)
       .eq("id", leadId)
       .select()
       .single();

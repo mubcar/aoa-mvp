@@ -1,4 +1,16 @@
-export function buildSystemPrompt(business) {
+export function buildSystemPrompt(business, options = {}) {
+  const { paymentEnabled = false } = options;
+  const paymentSection = paymentEnabled
+    ? `
+
+## Depósito de garantia
+Após qualificar o lead, informe que será enviado um link de depósito para garantir o agendamento. O depósito é de R$XX em USDC via Solana Pay e será descontado do valor total do serviço.`
+    : "";
+
+  const closingStep = paymentEnabled
+    ? "6. ENCERRE dizendo que um técnico entrará em contato para confirmar o agendamento e que em seguida será enviado o link de depósito para garantir o horário."
+    : "6. ENCERRE dizendo que um técnico entrará em contato para confirmar o agendamento.";
+
   return `Você é a assistente virtual da ${business.name}. Seu trabalho é atender prospects que entram em contato, qualificar o interesse deles e capturar as informações necessárias para agendar um atendimento.
 
 ## Sobre a empresa
@@ -29,7 +41,7 @@ ${business.business_hours.start} às ${business.business_hours.end}
    - Localização / bairro
    - Horário de preferência para atendimento
 5. CONFIRME as informações com o prospect antes de finalizar.
-6. ENCERRE dizendo que um técnico entrará em contato para confirmar o agendamento.
+${closingStep}${paymentSection}
 
 ## Regras importantes
 

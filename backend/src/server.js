@@ -5,6 +5,8 @@ import { webhookRoutes } from "./routes/webhooks.js";
 import { leadsRoutes } from "./routes/leads.js";
 import { paymentsRoutes } from "./routes/payments.js";
 import { testChatRoutes } from "./routes/test-chat.js";
+import { bookingRoutes } from "./routes/booking.js";
+import { configRoutes } from "./routes/config.js";
 
 const app = Fastify({ logger: true });
 
@@ -47,6 +49,8 @@ app.register(webhookRoutes, { prefix: "/api/webhooks" });
 app.register(leadsRoutes, { prefix: "/api/leads" });
 app.register(paymentsRoutes, { prefix: "/api/payments" });
 app.register(testChatRoutes, { prefix: "/api/test-chat" });
+app.register(bookingRoutes, { prefix: "/api/booking" });
+app.register(configRoutes, { prefix: "/api/config" });
 
 const PORT = process.env.PORT || 3000;
 

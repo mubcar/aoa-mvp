@@ -3,12 +3,15 @@ import { supabase } from "../lib/supabase";
 import { X, MessageSquare, Phone, Bot, User, ExternalLink } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useFeatures } from "../hooks/useFeatures";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export function LeadDetail({ lead, onClose }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { features } = useFeatures();
+  const solanaOn = features.solanaEscrow;
 
   useEffect(() => {
     async function fetchMessages() {
@@ -139,7 +142,7 @@ export function LeadDetail({ lead, onClose }) {
 
         {/* Actions */}
         <div className="p-4 border-t space-y-2">
-          {lead.status === "qualified" && (
+          {solanaOn && lead.status === "qualified" && (
             <button
               onClick={handleGenerateDeposit}
               className="w-full py-2 px-4 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors flex items-center justify-center gap-2"
@@ -148,13 +151,18 @@ export function LeadDetail({ lead, onClose }) {
               Gerar link de depósito (Solana Pay)
             </button>
           )}
-          {lead.status === "deposit_sent" && (
+          {solanaOn && lead.status === "deposit_sent" && (
             <button
               onClick={handleConfirmDeposit}
               className="w-full py-2 px-4 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors"
             >
               Confirmar depósito (demo)
             </button>
+          )}
+          {!solanaOn && lead.status === "qualified" && (
+            <p className="text-sm text-gray-500 text-center">
+              Lead qualificado — entre em contato para agendar.
+            </p>
           )}
         </div>
       </div>

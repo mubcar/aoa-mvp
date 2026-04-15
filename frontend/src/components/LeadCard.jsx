@@ -1,6 +1,7 @@
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { MessageSquare, Phone, AlertTriangle, Clock, MapPin, DollarSign } from "lucide-react";
+import { useFeatures } from "../hooks/useFeatures";
 
 const urgencyConfig = {
   emergency: { label: "Emergência", color: "bg-red-100 text-red-800 border-red-200" },
@@ -15,14 +16,26 @@ const statusConfig = {
   qualified: { label: "Qualificado", color: "bg-green-100 text-green-800" },
   deposit_sent: { label: "Depósito enviado", color: "bg-yellow-100 text-yellow-800" },
   deposit_paid: { label: "Depósito pago", color: "bg-emerald-100 text-emerald-800" },
+  contacted: { label: "Contatado", color: "bg-yellow-100 text-yellow-800" },
   job_scheduled: { label: "Agendado", color: "bg-cyan-100 text-cyan-800" },
   job_complete: { label: "Concluído", color: "bg-gray-100 text-gray-800" },
   lost: { label: "Perdido", color: "bg-red-100 text-red-800" },
 };
 
+// When Solana is off, map deposit statuses to neutral lead statuses
+const nonCryptoStatusMap = {
+  deposit_sent: { label: "Contatado", color: "bg-yellow-100 text-yellow-800" },
+  deposit_paid: { label: "Agendado", color: "bg-cyan-100 text-cyan-800" },
+};
+
 export function LeadCard({ lead, onClick }) {
+  const { features } = useFeatures();
+  const solanaOn = features.solanaEscrow;
   const urgency = urgencyConfig[lead.urgency] || urgencyConfig.low;
-  const status = statusConfig[lead.status] || statusConfig.new;
+  const status =
+    (!solanaOn && nonCryptoStatusMap[lead.status]) ||
+    statusConfig[lead.status] ||
+    statusConfig.new;
   const timeAgo = formatDistanceToNow(new Date(lead.created_at), {
     addSuffix: true,
     locale: ptBR,
@@ -74,7 +87,7 @@ export function LeadCard({ lead, onClick }) {
           </span>
         )}
 
-        {lead.deposit_amount_usdc && (
+        {solanaOn && lead.deposit_amount_usdc && (
           <span className="flex items-center gap-1 text-emerald-600 font-medium">
             <DollarSign className="w-3 h-3" />
             {lead.deposit_amount_usdc} USDC
