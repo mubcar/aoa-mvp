@@ -48,8 +48,8 @@ export function Settings() {
           business_hours_end: existing.business_hours?.end || "18:00",
         });
       } else {
-        // Redirect to onboarding if no business configured
-        navigate("/onboarding");
+        // No business yet — just skip; SetupGate on dashboard handles this
+        setLoading(false);
         return;
       }
 

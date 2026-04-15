@@ -1,21 +1,15 @@
 import { processMessage } from "../services/claude.js";
 import { getSupabase } from "../config/supabase.js";
 
-// Demo business — same config as webhooks.js
+// Generic demo business — same config as webhooks.js DEFAULT_BUSINESS
 const DEMO_BUSINESS = {
   id: "00000000-0000-0000-0000-000000000001",
-  name: "ClimaTech Refrigeração",
-  slug: "climatech",
-  services: [
-    "Instalação de ar-condicionado",
-    "Manutenção preventiva",
-    "Limpeza de filtros",
-    "Conserto de ar-condicionado",
-    "Instalação de câmara fria",
-  ],
-  service_area: "São Paulo — Zona Sul e Centro",
+  name: "AOA",
+  slug: "aoa",
+  services: ["Serviços residenciais e comerciais"],
+  service_area: "Brasil",
   business_hours: { start: "08:00", end: "18:00" },
-  ai_prompt_context: `ClimaTech Refrigeração é uma empresa familiar com 8 anos de experiência em ar-condicionado residencial e comercial na zona sul de São Paulo. Trabalhamos com todas as marcas. Visita técnica custa R$150, descontada do serviço. Instalação de split a partir de R$800. Manutenção preventiva R$250. Atendemos emergências 24h com taxa adicional de R$200.`,
+  ai_prompt_context: `Você é a recepcionista virtual da AOA, plataforma de atendimento inteligente para prestadores de serviços. Atenda o prospect com simpatia, entenda o que ele precisa, capture os dados necessários (nome, serviço, urgência, localização, horário preferido) e informe que um técnico entrará em contato para confirmar o agendamento.`,
 };
 
 // In-memory conversation store (keyed by session_id)

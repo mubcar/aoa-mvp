@@ -221,7 +221,7 @@ const CHAT_MESSAGES = [
   },
   {
     from: "ai",
-    text: "Oi! Sou a assistente virtual da ClimaTech Refrigeração 😊 Nossa, imagino como deve estar desconfortável! Vou te ajudar a resolver isso o mais rápido possível. Qual seu nome e em qual bairro você está?",
+    text: "Oi! Sou a recepcionista virtual da AOA 😊 Nossa, imagino como deve estar desconfortável! Vou te ajudar a resolver isso o mais rápido possível. Qual seu nome e em qual bairro você está?",
     time: "14:32",
   },
   {
@@ -380,7 +380,7 @@ export function Landing() {
                   <Bot className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-white">ClimaTech Refrigeração</p>
+                  <p className="text-sm font-semibold text-white">AOA · Recepcionista Virtual</p>
                   <p className="text-[10px] text-emerald-200/70">online</p>
                 </div>
                 <Phone className="w-4 h-4 text-emerald-200/70" />
@@ -644,26 +644,26 @@ export function Landing() {
               <div className="space-y-2 text-neutral-400 leading-relaxed">
                 <p className="text-emerald-400">// Informações da empresa</p>
                 <p>
-                  <span className="text-blue-400">empresa:</span> ClimaTech Refrigeração
+                  <span className="text-blue-400">empresa:</span> Sua Empresa Aqui
                 </p>
                 <p>
-                  <span className="text-blue-400">experiência:</span> 8 anos
+                  <span className="text-blue-400">serviço:</span> Prestador de Serviços
                 </p>
                 <p>
-                  <span className="text-blue-400">área:</span> São Paulo, Zona Sul e Centro
+                  <span className="text-blue-400">área:</span> Sua cidade e região
                 </p>
-                <p className="mt-3 text-emerald-400">// Tabela de preços</p>
+                <p className="mt-3 text-emerald-400">// Tabela de preços (exemplo)</p>
                 <p>
-                  <span className="text-blue-400">instalação_split:</span>{" "}
-                  <span className="text-amber-400">a partir de R$800</span>
+                  <span className="text-blue-400">visita_técnica:</span>{" "}
+                  <span className="text-amber-400">a combinar</span>
                 </p>
                 <p>
-                  <span className="text-blue-400">manutenção:</span>{" "}
-                  <span className="text-amber-400">R$250</span>
+                  <span className="text-blue-400">atendimento:</span>{" "}
+                  <span className="text-amber-400">24h emergências</span>
                 </p>
                 <p>
                   <span className="text-blue-400">visita_técnica:</span>{" "}
-                  <span className="text-amber-400">R$150</span>{" "}
+                  <span className="text-amber-400">sob consulta</span>{" "}
                   <span className="text-neutral-600">(desconta do serviço)</span>
                 </p>
                 <p>

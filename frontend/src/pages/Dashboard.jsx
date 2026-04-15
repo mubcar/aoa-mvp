@@ -46,12 +46,7 @@ export function Dashboard() {
     }
   }, [user, authLoading, navigate]);
 
-  // Redirect to onboarding if no business
-  useEffect(() => {
-    if (!loading && user && !business) {
-      navigate("/onboarding");
-    }
-  }, [loading, user, business, navigate]);
+  // No redirect to onboarding — SetupGate handles first-time users
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
