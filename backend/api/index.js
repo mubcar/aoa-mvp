@@ -7,6 +7,7 @@ import { paymentsRoutes } from "../src/routes/payments.js";
 import { testChatRoutes } from "../src/routes/test-chat.js";
 import { bookingRoutes } from "../src/routes/booking.js";
 import { configRoutes } from "../src/routes/config.js";
+import { adminRoutes } from "../src/routes/admin.js";
 
 const app = Fastify({ logger: true });
 
@@ -39,6 +40,7 @@ app.register(paymentsRoutes, { prefix: "/api/payments" });
 app.register(testChatRoutes, { prefix: "/api/test-chat" });
 app.register(bookingRoutes, { prefix: "/api/booking" });
 app.register(configRoutes, { prefix: "/api/config" });
+app.register(adminRoutes, { prefix: "/api/admin" });
 
 await app.ready();
 
