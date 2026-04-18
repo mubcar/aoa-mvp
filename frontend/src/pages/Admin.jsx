@@ -82,6 +82,7 @@ function BusinessForm({ initial = {}, onSave, onCancel, token }) {
     phone: initial.phone || "",
     whatsapp_number: initial.whatsapp_number || "",
     whatsapp_instance: initial.whatsapp_instance || "",
+    notification_whatsapp: initial.notification_whatsapp || "",
     services: Array.isArray(initial.services) ? initial.services.join(", ") : (initial.services || ""),
     service_area: initial.service_area || "",
     business_hours_start: initial.business_hours?.start || "08:00",
@@ -133,6 +134,11 @@ function BusinessForm({ initial = {}, onSave, onCancel, token }) {
         <FField label="Evolution API — Instance Name">
           <input value={form.whatsapp_instance} onChange={(e) => set("whatsapp_instance", e.target.value)}
             className={input} placeholder="hidraulica-silva" />
+        </FField>
+        <FField label="📲 Notificações WhatsApp">
+          <input value={form.notification_whatsapp} onChange={(e) => set("notification_whatsapp", e.target.value)}
+            className={input} placeholder="5511999999999 ou JID do grupo @g.us" />
+          <p className="text-[10px] text-gray-600 mt-0.5">Número ou grupo que recebe o card quando um lead qualifica</p>
         </FField>
         <FField label="Horário de funcionamento">
           <div className="flex gap-2 items-center">

@@ -8,6 +8,7 @@ import { testChatRoutes } from "./routes/test-chat.js";
 import { bookingRoutes } from "./routes/booking.js";
 import { configRoutes } from "./routes/config.js";
 import { adminRoutes } from "./routes/admin.js";
+import { calendlyWebhookRoutes } from "./routes/webhooks-calendly.js";
 
 const app = Fastify({ logger: true });
 
@@ -53,6 +54,7 @@ app.register(testChatRoutes, { prefix: "/api/test-chat" });
 app.register(bookingRoutes, { prefix: "/api/booking" });
 app.register(configRoutes, { prefix: "/api/config" });
 app.register(adminRoutes, { prefix: "/api/admin" });
+app.register(calendlyWebhookRoutes, { prefix: "/api/webhooks" });
 
 const PORT = process.env.PORT || 3000;
 

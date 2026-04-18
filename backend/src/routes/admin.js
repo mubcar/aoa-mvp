@@ -105,7 +105,7 @@ export async function adminRoutes(app) {
 
     const allowed = [
       "name", "slug", "phone", "whatsapp_number", "whatsapp_instance",
-      "service_area", "ai_prompt_context", "owner_id",
+      "notification_whatsapp", "service_area", "ai_prompt_context", "owner_id",
     ];
     const updates = {};
     for (const key of allowed) {

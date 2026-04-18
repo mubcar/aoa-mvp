@@ -3,6 +3,7 @@ import { processMessage } from "../services/claude.js";
 import {
   sendWhatsAppMessage,
   parseEvolutionWebhook,
+  sendLeadNotification,
 } from "../services/evolution.js";
 import { features } from "../config/features.js";
 
@@ -145,8 +146,12 @@ export async function webhookRoutes(app) {
         });
       }
 
-      // If AI qualified the lead, update lead data
+      // If AI qualified the lead, update lead data + notify owner
       if (toolCall) {
+        const updatedLead = {
+          ...lead,
+          contact_phone: lead.contact_phone || phoneNumber,
+        };
         await supabase
           .from("leads")
           .update({
@@ -161,6 +166,9 @@ export async function webhookRoutes(app) {
             updated_at: new Date().toISOString(),
           })
           .eq("id", lead.id);
+
+        // Fire-and-forget: notify business owner via WhatsApp
+        sendLeadNotification(business, updatedLead, toolCall);
       }
 
       // Send reply via WhatsApp
