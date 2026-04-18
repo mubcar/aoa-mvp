@@ -54,7 +54,23 @@ export async function webhookRoutes(app) {
   /**
    * Evolution API webhook — incoming WhatsApp messages
    */
-  app.post("/evolution", async (request, reply) => {
+  app.post("/evolution", {
+    config: {
+      rateLimit: {
+        max: 120,         // 120 messages per minute per IP (generous for real use)
+        timeWindow: "1 minute",
+      },
+    },
+  }, async (request, reply) => {
+    // Signature check — Evolution API sends x-webhook-secret header
+    const webhookSecret = process.env.WEBHOOK_SECRET;
+    if (webhookSecret) {
+      const incoming = request.headers["x-webhook-secret"] || request.headers["x-api-key"];
+      if (incoming !== webhookSecret) {
+        request.log.warn("Rejected Evolution webhook — invalid secret");
+        return reply.status(401).send({ error: "Unauthorized" });
+      }
+    }
     try {
       const parsed = parseEvolutionWebhook(request.body);
       if (!parsed) return reply.status(200).send({ ok: true });

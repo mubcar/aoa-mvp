@@ -1,6 +1,7 @@
 import "../src/env.js";
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import rateLimit from "@fastify/rate-limit";
 import { webhookRoutes } from "../src/routes/webhooks.js";
 import { leadsRoutes } from "../src/routes/leads.js";
 import { paymentsRoutes } from "../src/routes/payments.js";
@@ -20,6 +21,7 @@ await app.register(cors, {
   origin: allowedOrigins,
   credentials: true,
 });
+await app.register(rateLimit, { global: false });
 
 // Health check
 app.get("/health", async () => ({

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import { useNavigate } from "react-router-dom";
-import { Settings as SettingsIcon, LogOut, FileText, Save, AlertCircle, CheckCircle, ArrowLeft } from "lucide-react";
+import { Settings as SettingsIcon, LogOut, FileText, Save, AlertCircle, CheckCircle, ArrowLeft, Clock } from "lucide-react";
 
 export function Settings() {
   const [business, setBusiness] = useState(null);
@@ -48,7 +48,7 @@ export function Settings() {
           business_hours_end: existing.business_hours?.end || "18:00",
         });
       } else {
-        // No business yet — just skip; SetupGate on dashboard handles this
+        // No business linked yet — show a waiting state
         setLoading(false);
         return;
       }
@@ -100,6 +100,25 @@ export function Settings() {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <p className="text-neutral-400">Carregando...</p>
+      </div>
+    );
+  }
+
+  if (!business) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center p-6">
+        <div className="text-center max-w-sm">
+          <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4">
+            <Clock className="w-6 h-6 text-neutral-400" />
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Configuração pendente</h2>
+          <p className="text-neutral-500 text-sm mb-6">
+            Sua empresa ainda não foi configurada. Após a chamada de setup, nossa equipe ativa seu dashboard em até 24h.
+          </p>
+          <a href="/dashboard" className="text-sm text-white font-medium hover:underline">
+            ← Voltar ao dashboard
+          </a>
+        </div>
       </div>
     );
   }

@@ -4,13 +4,23 @@ import { BookCallModal } from "./BookCallModal";
 
 /**
  * Full-screen gate that blocks the dashboard until the user books
- * a setup call. Once booked, a localStorage flag keeps it hidden.
+ * a setup call.
+ *
+ * Bypassed when:
+ *  - hasBusiness is true (admin already linked their account)
+ *  - localStorage.aoa_setup_booked === 'true' (they already booked)
  */
-export function SetupGate() {
+export function SetupGate({ hasBusiness = false }) {
   const [booked, setBooked] = useState(() => {
     if (typeof window === "undefined") return true;
+    if (hasBusiness) return true;
     return localStorage.getItem("aoa_setup_booked") === "true";
   });
+
+  // If admin links the business while the page is open, bypass the gate
+  useEffect(() => {
+    if (hasBusiness) setBooked(true);
+  }, [hasBusiness]);
   const [modalOpen, setModalOpen] = useState(false);
 
   // React to localStorage changes in other tabs

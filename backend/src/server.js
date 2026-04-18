@@ -1,6 +1,7 @@
 import "./env.js"; // Load .env BEFORE any other imports that read process.env
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import rateLimit from "@fastify/rate-limit";
 import { webhookRoutes } from "./routes/webhooks.js";
 import { leadsRoutes } from "./routes/leads.js";
 import { paymentsRoutes } from "./routes/payments.js";
@@ -20,6 +21,14 @@ const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
 await app.register(cors, {
   origin: allowedOrigins,
   credentials: true,
+});
+
+// Rate limiting — protect webhooks and public routes from abuse
+await app.register(rateLimit, {
+  global: false, // opt-in per route
+});
+app.setNotFoundHandler({ config: { rateLimit: { max: 50, timeWindow: "1 minute" } } }, (req, reply) => {
+  reply.status(404).send({ error: "Not Found" });
 });
 
 // Health check (expanded for production monitoring)
