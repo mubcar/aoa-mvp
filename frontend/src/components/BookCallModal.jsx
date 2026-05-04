@@ -1,7 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { X, Check, Calendar, Clock, Loader2 } from "lucide-react";
 
-const SERVICE_TYPES = ["HVAC", "Encanador", "Solar", "Eletricista", "Paisagismo"];
+const SERVICE_TYPES = [
+  "Paisagismo",
+  "Jardinagem",
+  "HVAC / Refrigeração",
+  "Encanamento",
+  "Energia Solar",
+  "Eletricista",
+  "Manutenção Geral",
+  "Outro",
+];
 const TIME_SLOTS = [
   { value: "10:00", label: "10:00 (São Paulo)" },
   { value: "14:00", label: "14:00 (São Paulo)" },
@@ -164,10 +173,10 @@ export function BookCallModal({ onClose, onSuccess, fullscreen = false }) {
         {step === "details" && (
           <form onSubmit={handleDetailsSubmit} className="p-6">
             <h3 className="text-xl font-bold text-gray-900 mb-1">
-              Agendar Chamada de Setup
+              Agendar Conversa de Setup
             </h3>
             <p className="text-sm text-gray-500 mb-6">
-              Vamos configurar sua IA juntos em 30 minutos.
+              Vamos configurar sua IA juntos em 30 minutos via mensagem ou videochamada.
             </p>
 
             <div className="space-y-4">

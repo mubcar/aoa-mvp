@@ -1,15 +1,15 @@
 import { processMessage } from "../services/claude.js";
 import { getSupabase } from "../config/supabase.js";
 
-// Generic demo business — same config as webhooks.js DEFAULT_BUSINESS
+// Demo business — Flora Multi Verde (paisagismo, palmeiras e plantas)
 const DEMO_BUSINESS = {
   id: "00000000-0000-0000-0000-000000000001",
-  name: "AOA",
-  slug: "aoa",
-  services: ["Serviços residenciais e comerciais"],
-  service_area: "Brasil",
+  name: "Flora Multi Verde",
+  slug: "flora-multi-verde",
+  services: ["Venda de palmeiras", "Plantas ornamentais", "Paisagismo", "Jardinagem", "Projeto de jardim"],
+  service_area: "Grande São Paulo",
   business_hours: { start: "08:00", end: "18:00" },
-  ai_prompt_context: `Você é a recepcionista virtual da AOA, plataforma de atendimento inteligente para prestadores de serviços. Atenda o prospect com simpatia, entenda o que ele precisa, capture os dados necessários (nome, serviço, urgência, localização, horário preferido) e informe que um técnico entrará em contato para confirmar o agendamento.`,
+  ai_prompt_context: `Flora Multi Verde é uma empresa especializada em paisagismo, venda de palmeiras e plantas ornamentais na Grande São Paulo. Trabalhamos com jerivá, palmeira real, palmeira imperial, areca e diversas plantas tropicais e ornamentais. Fazemos entrega e plantio na Grande SP. Também realizamos projetos completos de paisagismo para residências e empresas. Para orçamentos de palmeiras, precisamos saber o tamanho do espaço e o tipo de planta desejada. Projetos de paisagismo incluem visita técnica gratuita.`,
 };
 
 // In-memory conversation store (keyed by session_id)
@@ -137,27 +137,27 @@ export async function testChatRoutes(app) {
 
     const scenarios = [
       {
-        name: "Maria Santos",
+        name: "Carlos Mendes",
         messages: [
-          "Oi, meu ar-condicionado quebrou e ta saindo ar quente. Ta fazendo 38 graus aqui!",
-          "Meu nome e Maria Santos, moro na Vila Mariana. E um split LG. Faz 2 anos sem manutencao e tenho um bebe em casa. Preciso resolver hoje de manha se possivel.",
-          "Sim, esta tudo certo! Obrigada.",
-        ],
-      },
-      {
-        name: "Carlos Oliveira",
-        messages: [
-          "Boa tarde, gostaria de instalar um ar-condicionado no meu escritorio.",
-          "Me chamo Carlos Oliveira, fico no Brooklin. Queria instalar 2 splits de 12000 BTUs. Pode ser na proxima semana.",
-          "Perfeito, pode confirmar sim.",
+          "Oi, gostaria de saber sobre palmeiras para meu jardim. Tenho um espaco grande em Alphaville.",
+          "Me chamo Carlos Mendes. O jardim tem uns 80m2, queria um jeriva adulto ou palmeira imperial. Pode ser qualquer dia dessa semana de manha.",
+          "Sim, pode confirmar! Obrigado.",
         ],
       },
       {
         name: "Ana Ferreira",
         messages: [
-          "Ola, preciso de uma manutencao preventiva nos meus ar-condicionados.",
-          "Sou a Ana Ferreira, tenho 3 splits em casa no Ipiranga. Queria agendar uma limpeza completa. Qualquer dia da semana que vem de tarde serve.",
-          "Tudo certo, obrigada!",
+          "Boa tarde! Quero fazer um projeto de paisagismo na minha casa nova.",
+          "Sou a Ana Ferreira, moro no Morumbi, SP. E uma casa com jardim de frente e fundos, uns 200m2 no total. Quero plantas tropicais, palmeiras e uma horta. Pode ser semana que vem para visita.",
+          "Perfeito, vou aguardar o contato!",
+        ],
+      },
+      {
+        name: "Roberto Lima",
+        messages: [
+          "Preciso de plantas ornamentais para recepcao da minha empresa.",
+          "Sou Roberto Lima, temos um escritorio no Itaim Bibi. Quero plantas grandes para deixar o ambiente mais bonito, umas 5 ou 6 plantas para vasos internos. Pode ser essa semana.",
+          "Tudo certo, obrigado!",
         ],
       },
     ];

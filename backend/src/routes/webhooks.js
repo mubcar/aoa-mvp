@@ -10,12 +10,12 @@ import {
 // In production each real client has their own business row with custom context.
 const DEFAULT_BUSINESS = {
   id: "00000000-0000-0000-0000-000000000001",
-  name: "AOA",
-  slug: "aoa",
-  services: ["Serviços residenciais e comerciais"],
-  service_area: "Brasil",
+  name: "Flora Multi Verde",
+  slug: "flora-multi-verde",
+  services: ["Venda de palmeiras", "Plantas ornamentais", "Paisagismo", "Jardinagem", "Projeto de jardim"],
+  service_area: "Grande São Paulo",
   business_hours: { start: "08:00", end: "18:00" },
-  ai_prompt_context: `Você é a recepcionista virtual da AOA, plataforma de atendimento inteligente para prestadores de serviços. Atenda o prospect com simpatia, entenda o que ele precisa, capture os dados necessários (nome, serviço, urgência, localização, horário preferido) e informe que um técnico entrará em contato para confirmar o agendamento.`,
+  ai_prompt_context: `Flora Multi Verde é uma empresa especializada em paisagismo, venda de palmeiras e plantas ornamentais na Grande São Paulo. Trabalhamos com jerivá, palmeira real, palmeira imperial, areca e diversas plantas tropicais e ornamentais. Fazemos entrega e plantio na Grande SP. Também realizamos projetos completos de paisagismo para residências e empresas. Para orçamentos de palmeiras, precisamos saber o tamanho do espaço e o tipo de planta desejada. Projetos de paisagismo incluem visita técnica gratuita.`,
 };
 
 /**

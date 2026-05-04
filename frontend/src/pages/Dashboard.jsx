@@ -82,7 +82,7 @@ export function Dashboard() {
                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
               >
                 <Calendar className="w-4 h-4" />
-                Agendar Chamada de Setup
+                Agendar Conversa de Setup
               </button>
               <div className="flex items-center gap-2 border-l border-gray-200 pl-4">
                 <a

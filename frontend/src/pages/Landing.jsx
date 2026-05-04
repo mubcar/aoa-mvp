@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import {
   Zap,
   MessageSquare,
-  Phone,
   BarChart3,
   ArrowRight,
   Clock,
@@ -13,7 +12,6 @@ import {
   Check,
   Star,
   Users,
-  Headphones,
   DollarSign,
   Globe,
   Cpu,
@@ -27,6 +25,7 @@ import {
   Droplets,
   Plug,
   TreePine,
+  Bell,
 } from "lucide-react";
 
 const FEATURES = [
@@ -47,9 +46,9 @@ const FEATURES = [
     borderColor: "border-emerald-500/20 hover:border-emerald-500/40",
   },
   {
-    icon: Headphones,
-    title: "Atende ligações",
-    desc: "Agente de voz que atende chamadas perdidas e qualifica o cliente por ligação.",
+    icon: Bell,
+    title: "Notificação instantânea",
+    desc: "Quando um cliente é qualificado, você recebe um resumo completo direto no seu WhatsApp.",
     color: "from-blue-500/20 to-blue-600/5",
     iconColor: "text-blue-400",
     borderColor: "border-blue-500/20 hover:border-blue-500/40",
@@ -72,8 +71,8 @@ const FEATURES = [
   },
   {
     icon: DollarSign,
-    title: "Cobra pagamentos",
-    desc: "Gera link de pagamento automático após qualificação. Cliente paga o sinal sem você precisar cobrar.",
+    title: "Leads organizados",
+    desc: "Cada cliente qualificado chega com nome, serviço, urgência e horário preferido. Só chegar e atender.",
     color: "from-emerald-500/20 to-emerald-600/5",
     iconColor: "text-emerald-400",
     borderColor: "border-emerald-500/20 hover:border-emerald-500/40",
@@ -97,7 +96,7 @@ const STEPS = [
   {
     num: "02",
     title: "IA começa a atender",
-    desc: "Atende clientes, responde dúvidas, agenda serviços e cobra pagamentos.",
+    desc: "Responde mensagens, entende o que o cliente precisa e coleta todos os dados do atendimento.",
     color: "from-blue-500 to-blue-600",
     glow: "bg-blue-500/20",
   },
@@ -120,7 +119,7 @@ const PLANS = [
       "WhatsApp integrado",
       "Dashboard básico",
       "1 número conectado",
-      "Suporte por email",
+      "Suporte por mensagem",
     ],
     cta: "Começar agora",
     highlighted: false,
@@ -131,10 +130,10 @@ const PLANS = [
     period: "/mês",
     features: [
       "Atendimentos ilimitados",
-      "WhatsApp + Ligação",
+      "WhatsApp ilimitado",
       "Dashboard completo",
       "3 números conectados",
-      "Cobrança automática de sinal",
+      "Notificações automáticas",
       "Suporte prioritário",
     ],
     cta: "Mais popular",
@@ -151,7 +150,7 @@ const PLANS = [
       "Onboarding dedicado",
       "SLA garantido",
     ],
-    cta: "Falar com vendas",
+    cta: "Falar com a gente",
     highlighted: false,
   },
 ];
@@ -174,7 +173,7 @@ const TESTIMONIALS = [
   {
     name: "Fernando Costa",
     role: "Proprietário — HidroFix Encanamentos",
-    text: "Antes eu perdia chamados de emergência porque tava debaixo de uma pia. Agora a IA já agenda e eu recebo tudo organizado no celular.",
+    text: "Antes eu perdia clientes porque tava debaixo de uma pia. Agora a IA já registra tudo e eu recebo um resumo organizado no WhatsApp.",
     avatar: "FC",
     color: "bg-emerald-500",
   },
@@ -196,11 +195,11 @@ const FAQ = [
   },
   {
     q: "A IA funciona para meu tipo de serviço?",
-    a: "Sim. A IA é personalizada para o seu negócio. Você configura os serviços, preços, horários e a forma de atender. Funciona para qualquer serviço residencial ou comercial.",
+    a: "Sim. A IA é personalizada para o seu negócio. Você configura os serviços, preços, horários e a forma de atender. Funciona para qualquer prestador de serviços residencial ou comercial.",
   },
   {
     q: "E se o cliente perguntar algo que a IA não sabe?",
-    a: "A IA responde que vai verificar com a equipe técnica e registra a pergunta. Você recebe a notificação e pode responder manualmente a qualquer momento.",
+    a: "A IA responde que vai verificar com a equipe e registra a pergunta. Você recebe a notificação e pode responder manualmente a qualquer momento.",
   },
   {
     q: "Quanto tempo leva para configurar?",
@@ -212,37 +211,37 @@ const FAQ = [
   },
 ];
 
-// WhatsApp chat messages for the demo
+// WhatsApp chat demo — Flora Multi Verde (paisagista, palmeiras e plantas)
 const CHAT_MESSAGES = [
   {
     from: "client",
-    text: "Oi, boa tarde! Meu ar-condicionado parou de gelar e ta saindo ar quente. Ta fazendo 38 graus aqui e tenho um bebe em casa 😰",
-    time: "14:32",
+    text: "Oi, boa tarde! Queria saber sobre palmeiras para o meu jardim. Tenho um espaço grande e quero algo que dê sombra e deixe bonito 🌴",
+    time: "15:10",
   },
   {
     from: "ai",
-    text: "Oi! Sou a recepcionista virtual da AOA 😊 Nossa, imagino como deve estar desconfortável! Vou te ajudar a resolver isso o mais rápido possível. Qual seu nome e em qual bairro você está?",
-    time: "14:32",
+    text: "Oi! Sou a assistente virtual da Flora Multi Verde 🌿 Que projeto lindo! Palmeiras transformam qualquer espaço. Me conta: qual é a cidade e o tamanho aproximado do jardim? Assim consigo indicar as melhores opções pra você.",
+    time: "15:10",
   },
   {
     from: "client",
-    text: "Maria Santos, moro na Vila Mariana. É um split LG, faz 2 anos sem manutenção",
-    time: "14:33",
+    text: "Fico em Alphaville, SP. O jardim tem uns 80m², queria uma palmeira imperial ou jerivá mesmo",
+    time: "15:11",
   },
   {
     from: "ai",
-    text: "Maria, entendo a urgência! Com bebê em casa não dá pra esperar mesmo. Vou registrar como emergência e nosso técnico vai te atender ainda hoje pela manhã. A visita técnica custa R$150 e já é descontada do serviço. Posso confirmar?",
-    time: "14:33",
+    text: "Perfeito para esse espaço! 🌴 Temos jerivá adulto e palmeira real disponíveis. O jerivá dá uma sombra incrível e é muito resistente. Qual seu nome para eu registrar o interesse? E qual seria o melhor dia para nossa equipe visitar e dar um orçamento?",
+    time: "15:11",
   },
   {
     from: "client",
-    text: "Sim, por favor! Pode ser às 8h?",
-    time: "14:34",
+    text: "Sou Carlos Mendes, pode ser qualquer dia dessa semana de manhã",
+    time: "15:12",
   },
   {
     from: "ai",
-    text: "Perfeito Maria! ✅ Agendado para hoje às 8h na Vila Mariana. Nosso técnico vai entrar em contato pra confirmar. Fique tranquila que vamos resolver! 🔧",
-    time: "14:34",
+    text: "Ótimo Carlos! ✅ Registrei seu interesse: palmeira para jardim de 80m² em Alphaville. Nossa equipe vai entrar em contato pelo WhatsApp para confirmar a visita e já mandar fotos das palmeiras disponíveis 🌿",
+    time: "15:12",
   },
 ];
 
@@ -331,8 +330,8 @@ export function Landing() {
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            IA que atende clientes, responde dúvidas, agenda serviços e cobra
-            pagamentos — tudo no automático pelo WhatsApp e ligação.
+            IA que atende clientes pelo WhatsApp, qualifica o interesse e entrega
+            cada lead organizado no seu painel — tudo automático, 24h por dia.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
@@ -375,18 +374,18 @@ export function Landing() {
             <div className="rounded-[2rem] overflow-hidden">
               {/* WhatsApp header */}
               <div className="bg-[#075E54] px-4 py-3 flex items-center gap-3">
-                <div className="w-2 h-2" /> {/* spacer for notch */}
+                <div className="w-2 h-2" />
                 <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center flex-shrink-0">
                   <Bot className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-white">AOA · Recepcionista Virtual</p>
+                  <p className="text-sm font-semibold text-white">Flora Multi Verde · IA</p>
                   <p className="text-[10px] text-emerald-200/70">online</p>
                 </div>
-                <Phone className="w-4 h-4 text-emerald-200/70" />
+                <MessageSquare className="w-4 h-4 text-emerald-200/70" />
               </div>
 
-              {/* Chat area with WhatsApp wallpaper */}
+              {/* Chat area */}
               <div
                 className="relative min-h-[420px] p-3 space-y-2 overflow-hidden"
                 style={{
@@ -394,7 +393,6 @@ export function Landing() {
                   backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
                 }}
               >
-                {/* Date bubble */}
                 <div className="flex justify-center mb-2">
                   <span className="bg-[#182229] text-[10px] text-neutral-400 px-3 py-1 rounded-lg shadow-sm">
                     HOJE
@@ -440,13 +438,13 @@ export function Landing() {
                   </div>
                 )}
 
-                {/* Qualified badge after all messages */}
+                {/* Qualified badge */}
                 {visibleMessages >= CHAT_MESSAGES.length && (
                   <div className="flex justify-center pt-2 animate-fade-in">
                     <div className="px-4 py-2 rounded-xl bg-emerald-500/20 border border-emerald-500/30 shadow-lg shadow-emerald-500/10">
                       <p className="text-xs text-emerald-400 font-semibold flex items-center gap-2">
                         <Check className="w-3.5 h-3.5" />
-                        Cliente qualificado · Emergência · Agendado 8h
+                        Lead qualificado · Alphaville · Palmeira imperial
                       </p>
                     </div>
                   </div>
@@ -467,7 +465,6 @@ export function Landing() {
             </div>
           </div>
 
-          {/* Label under phone */}
           <p className="text-center text-xs text-neutral-600 mt-6">
             Conversa real simulada — a IA responde em menos de 3 segundos
           </p>
@@ -487,7 +484,6 @@ export function Landing() {
           <div className="grid md:grid-cols-3 gap-8">
             {STEPS.map((step, i) => (
               <div key={step.num} className="group relative">
-                {/* Connector line */}
                 {i < 2 && (
                   <div className="hidden md:block absolute top-10 left-full w-full h-px bg-gradient-to-r from-white/10 to-transparent z-0" />
                 )}
@@ -516,7 +512,7 @@ export function Landing() {
             Para quem é
           </p>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-12">
-            Feito para empresas de serviços residenciais
+            Feito para prestadores de serviços
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {INDUSTRIES.map((ind) => (
@@ -553,7 +549,7 @@ export function Landing() {
                 key={f.title}
                 className={`group p-6 rounded-2xl border bg-gradient-to-b ${f.color} ${f.borderColor} transition-all hover:scale-[1.02]`}
               >
-                <div className={`w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center mb-4 group-hover:bg-white/10 transition-colors`}>
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center mb-4 group-hover:bg-white/10 transition-colors">
                   <f.icon className={`w-5 h-5 ${f.iconColor}`} />
                 </div>
                 <h3 className="font-semibold mb-2">{f.title}</h3>
@@ -639,43 +635,38 @@ export function Landing() {
             <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 font-mono text-xs">
               <div className="flex items-center gap-2 mb-4 text-neutral-500">
                 <CircleDot className="w-3 h-3 text-emerald-500" />
-                <span>Contexto da IA — Exemplo</span>
+                <span>Contexto da IA — Flora Multi Verde</span>
               </div>
               <div className="space-y-2 text-neutral-400 leading-relaxed">
                 <p className="text-emerald-400">// Informações da empresa</p>
                 <p>
-                  <span className="text-blue-400">empresa:</span> Sua Empresa Aqui
+                  <span className="text-blue-400">empresa:</span> Flora Multi Verde
                 </p>
                 <p>
-                  <span className="text-blue-400">serviço:</span> Prestador de Serviços
+                  <span className="text-blue-400">serviço:</span> Paisagismo e Palmeiras
                 </p>
                 <p>
-                  <span className="text-blue-400">área:</span> Sua cidade e região
+                  <span className="text-blue-400">área:</span> Grande São Paulo
                 </p>
-                <p className="mt-3 text-emerald-400">// Tabela de preços (exemplo)</p>
+                <p className="mt-3 text-emerald-400">// Catálogo (exemplo)</p>
                 <p>
-                  <span className="text-blue-400">visita_técnica:</span>{" "}
-                  <span className="text-amber-400">a combinar</span>
-                </p>
-                <p>
-                  <span className="text-blue-400">atendimento:</span>{" "}
-                  <span className="text-amber-400">24h emergências</span>
+                  <span className="text-blue-400">jerivá_adulto:</span>{" "}
+                  <span className="text-amber-400">a partir de R$800</span>
                 </p>
                 <p>
-                  <span className="text-blue-400">visita_técnica:</span>{" "}
-                  <span className="text-amber-400">sob consulta</span>{" "}
-                  <span className="text-neutral-600">(desconta do serviço)</span>
+                  <span className="text-blue-400">palmeira_real:</span>{" "}
+                  <span className="text-amber-400">a partir de R$1.200</span>
                 </p>
                 <p>
-                  <span className="text-blue-400">emergência_24h:</span>{" "}
-                  <span className="text-amber-400">+R$200</span>
+                  <span className="text-blue-400">paisagismo_completo:</span>{" "}
+                  <span className="text-amber-400">sob consulta</span>
                 </p>
                 <p className="mt-3 text-emerald-400">// Regras especiais</p>
                 <p>
-                  <span className="text-blue-400">marcas:</span> todas
+                  <span className="text-blue-400">entrega:</span> inclusa na Grande SP
                 </p>
                 <p>
-                  <span className="text-blue-400">garantia:</span> 90 dias no serviço
+                  <span className="text-blue-400">plantio:</span> equipe especializada
                 </p>
               </div>
             </div>
@@ -796,10 +787,9 @@ export function Landing() {
               </h2>
               <div className="space-y-4 text-sm text-neutral-400 leading-relaxed">
                 <p>
-                  O dono de uma empresa de serviços não pode ficar no celular o dia
-                  inteiro. Ele está instalando um equipamento, consertando um
-                  encanamento, subindo no telhado. Enquanto isso, clientes mandam
-                  mensagem no WhatsApp e ninguém responde.
+                  O prestador de serviços não pode ficar no celular o dia inteiro. Ele está
+                  plantando, consertando, instalando, na estrada. Enquanto isso, clientes
+                  mandam mensagem no WhatsApp e ninguém responde.
                 </p>
                 <p>
                   <span className="text-white font-medium">40% desses clientes desistem</span>{" "}
@@ -808,8 +798,7 @@ export function Landing() {
                 <p>
                   A AOA resolve isso colocando uma IA inteligente no seu WhatsApp que
                   responde como se fosse sua recepcionista: educada, rápida,
-                  conhece seus preços e serviços, agenda o atendimento e ainda
-                  cobra o sinal.
+                  conhece seus serviços e preços, e registra cada cliente organizado.
                 </p>
                 <p>
                   Você continua fazendo o que sabe — o serviço — enquanto a IA
@@ -841,9 +830,9 @@ export function Landing() {
                   bg: "bg-violet-500/10 border-violet-500/20",
                 },
                 {
-                  icon: DollarSign,
-                  title: "Cobre sinal automático",
-                  desc: "Cliente qualificado já recebe o link de pagamento. Nada de calote ou desistência.",
+                  icon: Bell,
+                  title: "Notificação no seu WhatsApp",
+                  desc: "Quando um lead é qualificado, você recebe um resumo completo com nome, serviço e contato.",
                   color: "text-amber-400",
                   bg: "bg-amber-500/10 border-amber-500/20",
                 },
@@ -918,27 +907,15 @@ export function Landing() {
               </span>
             </div>
             <div className="flex items-center gap-6 text-xs text-neutral-500">
-              <a href="#recursos" className="hover:text-white transition-colors">
-                Recursos
-              </a>
-              <a href="#precos" className="hover:text-white transition-colors">
-                Preços
-              </a>
-              <a href="#faq" className="hover:text-white transition-colors">
-                FAQ
-              </a>
-              <a href="/login" className="hover:text-white transition-colors">
-                Login
-              </a>
+              <a href="#recursos" className="hover:text-white transition-colors">Recursos</a>
+              <a href="#precos" className="hover:text-white transition-colors">Preços</a>
+              <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
+              <a href="/login" className="hover:text-white transition-colors">Login</a>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-white/5">
-            <p className="text-xs text-neutral-700">
-              © 2026 AOA. Todos os direitos reservados.
-            </p>
-            <p className="text-xs text-neutral-700">
-              Feito com IA para quem faz com as mãos.
-            </p>
+            <p className="text-xs text-neutral-700">© 2026 AOA. Todos os direitos reservados.</p>
+            <p className="text-xs text-neutral-700">Feito com IA para quem faz com as mãos.</p>
           </div>
         </div>
       </footer>
