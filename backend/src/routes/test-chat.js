@@ -6,10 +6,10 @@ const DEMO_BUSINESS = {
   id: "00000000-0000-0000-0000-000000000001",
   name: "Flora Multi Verde",
   slug: "flora-multi-verde",
-  services: ["Venda de palmeiras", "Plantas ornamentais", "Paisagismo", "Jardinagem", "Projeto de jardim"],
+  services: ["Plantas ornamentais", "Vasos e cachepôs", "Substrato e terra", "Fertilizantes", "Paisagismo", "Projetos de jardim", "Jardinagem"],
   service_area: "Grande São Paulo",
   business_hours: { start: "08:00", end: "18:00" },
-  ai_prompt_context: `Flora Multi Verde é uma empresa especializada em paisagismo, venda de palmeiras e plantas ornamentais na Grande São Paulo. Trabalhamos com jerivá, palmeira real, palmeira imperial, areca e diversas plantas tropicais e ornamentais. Fazemos entrega e plantio na Grande SP. Também realizamos projetos completos de paisagismo para residências e empresas. Para orçamentos de palmeiras, precisamos saber o tamanho do espaço e o tipo de planta desejada. Projetos de paisagismo incluem visita técnica gratuita.`,
+  ai_prompt_context: `Flora Multi Verde é uma empresa de paisagismo e venda de plantas na Grande São Paulo. Trabalhamos com todo tipo de planta — tropicais, ornamentais, suculentas, plantas internas, ervas e flores. Também vendemos vasos (cerâmica, cimento, fibra), substratos (universal, para cactos, orgânico) e fertilizantes (NPK, húmus, foliar). Fazemos entrega na Grande SP com plantio opcional. Realizamos projetos de paisagismo para residências e empresas com visita técnica gratuita. Para atender bem o cliente precisamos entender o espaço (interno/externo, tamanho, luminosidade) e o que ele busca.`,
 };
 
 // In-memory conversation store (keyed by session_id)
@@ -137,27 +137,27 @@ export async function testChatRoutes(app) {
 
     const scenarios = [
       {
-        name: "Carlos Mendes",
+        name: "Ana Clara",
         messages: [
-          "Oi, gostaria de saber sobre palmeiras para meu jardim. Tenho um espaco grande em Alphaville.",
-          "Me chamo Carlos Mendes. O jardim tem uns 80m2, queria um jeriva adulto ou palmeira imperial. Pode ser qualquer dia dessa semana de manha.",
-          "Sim, pode confirmar! Obrigado.",
-        ],
-      },
-      {
-        name: "Ana Ferreira",
-        messages: [
-          "Boa tarde! Quero fazer um projeto de paisagismo na minha casa nova.",
-          "Sou a Ana Ferreira, moro no Morumbi, SP. E uma casa com jardim de frente e fundos, uns 200m2 no total. Quero plantas tropicais, palmeiras e uma horta. Pode ser semana que vem para visita.",
-          "Perfeito, vou aguardar o contato!",
+          "Oi! Quero montar um jardim na varanda do meu apartamento, umas plantas que aguentem sol e fiquem bonitas.",
+          "Sou a Ana Clara, moro em Pinheiros. A varanda tem uns 12m2, recebe sol da tarde. Gosto de flores e queria ja com vasos bonitos e substrato. Pode ser essa semana.",
+          "Sim, pode me mandar as opcoes! Obrigada.",
         ],
       },
       {
         name: "Roberto Lima",
         messages: [
-          "Preciso de plantas ornamentais para recepcao da minha empresa.",
-          "Sou Roberto Lima, temos um escritorio no Itaim Bibi. Quero plantas grandes para deixar o ambiente mais bonito, umas 5 ou 6 plantas para vasos internos. Pode ser essa semana.",
-          "Tudo certo, obrigado!",
+          "Preciso de plantas para recepcao da minha empresa e uns vasos grandes para o corredor.",
+          "Sou Roberto Lima, escritorio no Itaim Bibi. Ambiente interno com pouca luz. Quero umas 6 plantas grandes e vasos de cimento ou fibra. Pode ser essa semana para visita.",
+          "Perfeito, aguardo o contato!",
+        ],
+      },
+      {
+        name: "Carlos Mendes",
+        messages: [
+          "Oi, quero fazer um projeto de paisagismo no jardim da minha casa nova.",
+          "Me chamo Carlos Mendes, moro em Alphaville. Jardim de uns 200m2, quero algo tropical com flores, uma horta de ervas e substrato de qualidade. Pode ser semana que vem para visita?",
+          "Otimo, fico aguardando!",
         ],
       },
     ];

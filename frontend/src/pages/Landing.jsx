@@ -29,7 +29,7 @@ const FEATURES = [
   {
     icon: Bot,
     title: "IA treinada no seu catálogo",
-    desc: "Sabe quais palmeiras você tem, os preços, o prazo de entrega e a área de atendimento. Responde como você responderia.",
+    desc: "Sabe quais plantas, vasos e insumos você trabalha, os preços e a área de atendimento. Responde como você responderia.",
     color: "from-violet-500/20 to-violet-600/5",
     iconColor: "text-violet-400",
     borderColor: "border-violet-500/20 hover:border-violet-500/40",
@@ -69,7 +69,7 @@ const FEATURES = [
   {
     icon: Leaf,
     title: "Para qualquer jardim",
-    desc: "Palmeiras, plantas ornamentais, projetos residenciais, comerciais, hortas. A IA se adapta ao que você vende.",
+    desc: "Plantas, vasos, substrato, fertilizante, projetos residenciais e comerciais. A IA se adapta a tudo que você vende.",
     color: "from-emerald-500/20 to-emerald-600/5",
     iconColor: "text-emerald-400",
     borderColor: "border-emerald-500/20 hover:border-emerald-500/40",
@@ -94,7 +94,7 @@ const STEPS = [
   {
     num: "02",
     title: "Configuramos tudo para você",
-    desc: "Nossa equipe treina a IA com o seu catálogo específico. Palmeiras que você tem, preços, área de entrega, tudo.",
+    desc: "Nossa equipe treina a IA com o seu catálogo específico. Plantas, vasos, insumos, preços, área de atendimento — tudo.",
     color: "from-blue-500 to-blue-600",
     glow: "bg-blue-500/20",
     icon: Leaf,
@@ -111,7 +111,7 @@ const STEPS = [
 
 const TESTIMONIALS = [
   {
-    name: "Rodrigo Palmeira",
+    name: "Rodrigo Vieira",
     role: "Dono — Verde Nobre Paisagismo",
     text: "Eu estava perdendo clientes porque não conseguia responder no WhatsApp enquanto fazia projeto. Agora a IA responde, coleta tudo e eu só entro em contato pra fechar o orçamento.",
     avatar: "RP",
@@ -120,7 +120,7 @@ const TESTIMONIALS = [
   {
     name: "Fernanda Jardins",
     role: "Paisagista — Espaço Verde SP",
-    text: "O melhor é que a IA já sabe quais palmeiras eu tenho em estoque e os preços. O cliente chega na conversa já informado. Economia de tempo enorme.",
+    text: "O melhor é que a IA já sabe quais plantas, vasos e substratos eu trabalho e os preços. O cliente chega na conversa já informado. Economia de tempo enorme.",
     avatar: "FJ",
     color: "bg-blue-600",
   },
@@ -140,7 +140,7 @@ const FAQ = [
   },
   {
     q: "Como a IA sabe sobre o meu catálogo?",
-    a: "Na conversa de setup, nossa equipe mapeia tudo: quais plantas e palmeiras você trabalha, tamanhos disponíveis, faixas de preço, área de entrega e plantio, e como você prefere atender. A IA é configurada especificamente para o seu negócio.",
+    a: "Na conversa de setup, nossa equipe mapeia tudo: quais plantas, vasos, substratos e outros insumos você trabalha, faixas de preço, área de atendimento e como você prefere receber os leads. A IA é configurada especificamente para o seu negócio.",
   },
   {
     q: "E se o cliente perguntar algo fora do catálogo?",
@@ -160,32 +160,32 @@ const FAQ = [
 const CHAT_MESSAGES = [
   {
     from: "client",
-    text: "Oi, boa tarde! Queria saber sobre palmeiras para o meu jardim. Tenho um espaço grande em Alphaville 🌴",
+    text: "Oi! Quero montar um jardim na varanda do meu apartamento. Tenho uns 12m² e queria plantas que aguentem sol e fiquem bonitas 🌿",
     time: "15:10",
   },
   {
     from: "ai",
-    text: "Oi! Sou a assistente virtual da Flora Multi Verde 🌿 Que projeto lindo! Me conta: qual o tamanho aproximado do espaço e o que você está pensando — palmeira para sombra, decorativa, ou as duas coisas?",
+    text: "Oi! Sou a assistente virtual da Flora Multi Verde 😊 Que projeto gostoso! Varanda com sol direto tem ótimas opções — suculentas, lavanda, pata-de-vaca, ixora. Você prefere mais verde ou gosta de flores também?",
     time: "15:10",
   },
   {
     from: "client",
-    text: "Jardim de uns 80m², queria jerivá ou palmeira real. Algo que dê sombra e fique bonito",
+    text: "Adoro flores! E queria já com vasos bonitos, se possível. Fico em Pinheiros, SP",
     time: "15:11",
   },
   {
     from: "ai",
-    text: "Perfeito para esse espaço! 🌴 Temos jerivá adulto (ótima sombra) e palmeira real disponíveis. Qual seu nome e em qual cidade fica o jardim? Assim verifico disponibilidade de entrega e plantio.",
+    text: "Ótimo! 🌸 Trabalhamos com kits completos — planta + vaso + substrato já preparado. Temos vasos de cerâmica, cimento e fibra em vários tamanhos. Qual seu nome para eu registrar o interesse e nossa equipe entrar em contato com opções?",
     time: "15:11",
   },
   {
     from: "client",
-    text: "Sou Carlos Mendes, fica em Alphaville, Barueri",
+    text: "Sou Ana Clara, pode me mandar mensagem aqui mesmo no WhatsApp",
     time: "15:12",
   },
   {
     from: "ai",
-    text: "✅ Anotado, Carlos! Atendemos Alphaville sim. Nossa equipe vai entrar em contato pelo WhatsApp com fotos, tamanhos disponíveis e valores. Quando seria melhor — manhã ou tarde?",
+    text: "✅ Anotado, Ana Clara! Atendemos Pinheiros com entrega. Nossa equipe vai entrar em contato com fotos dos kits e valores. Tem preferência de horário para receber a mensagem?",
     time: "15:12",
   },
 ];
@@ -258,7 +258,7 @@ export function Landing() {
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            IA que responde seu WhatsApp, conhece seu catálogo de palmeiras e plantas,
+            IA que responde seu WhatsApp, conhece seu catálogo de plantas, vasos e insumos,
             qualifica cada cliente e te manda o resumo pronto para fechar o negócio.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -355,7 +355,7 @@ export function Landing() {
                     <div className="px-4 py-2 rounded-xl bg-emerald-500/20 border border-emerald-500/30 shadow-lg shadow-emerald-500/10">
                       <p className="text-xs text-emerald-400 font-semibold flex items-center gap-2">
                         <Check className="w-3.5 h-3.5" />
-                        Lead qualificado · Alphaville · Jerivá / Palmeira real
+                        Lead qualificado · Pinheiros · Kit varanda com flores
                       </p>
                     </div>
                   </div>
@@ -489,14 +489,14 @@ export function Landing() {
         <FloatingOrb className="bottom-0 right-0" color="bg-emerald-600" size="w-72 h-72" />
         <div className="max-w-4xl mx-auto">
           <p className="text-xs font-medium text-cyan-400 tracking-widest uppercase mb-4">Personalização</p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-6">A IA aprende o seu catálogo.</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-6">A IA aprende o seu negócio.</h2>
           <p className="text-neutral-400 mb-12 max-w-2xl">
-            Não é uma IA genérica. Na conversa de setup mapeamos exatamente o que você vende, seus preços e sua área de atendimento.
+            Não é uma IA genérica. Na conversa de setup mapeamos tudo: plantas, vasos, substratos, fertilizantes, serviços — e como você prefere atender.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
               {[
-                { icon: TreePine, text: "Catálogo de palmeiras e plantas com preços", color: "text-emerald-400" },
+                { icon: TreePine, text: "Catálogo completo: plantas, vasos, substratos, fertilizantes", color: "text-emerald-400" },
                 { icon: Leaf, text: "Tamanhos disponíveis e tempo de entrega", color: "text-green-400" },
                 { icon: Globe, text: "Área de atendimento, entrega e plantio", color: "text-blue-400" },
                 { icon: Flower2, text: "Projetos: residencial, comercial, hortas", color: "text-violet-400" },
@@ -515,17 +515,17 @@ export function Landing() {
                 <span>Catálogo configurado — Flora Multi Verde</span>
               </div>
               <div className="space-y-2 text-neutral-400 leading-relaxed">
-                <p className="text-emerald-400">// Palmeiras disponíveis</p>
-                <p><span className="text-blue-400">jerivá_adulto:</span> <span className="text-amber-400">a partir de R$800</span></p>
-                <p><span className="text-blue-400">palmeira_real:</span> <span className="text-amber-400">a partir de R$1.200</span></p>
-                <p><span className="text-blue-400">palmeira_imperial:</span> <span className="text-amber-400">a partir de R$950</span></p>
-                <p><span className="text-blue-400">areca:</span> <span className="text-amber-400">a partir de R$180</span></p>
+                <p className="text-emerald-400">// Plantas</p>
+                <p><span className="text-blue-400">tropicais:</span> <span className="text-amber-400">helicônia, ave-do-paraíso, etc</span></p>
+                <p><span className="text-blue-400">ornamentais:</span> <span className="text-amber-400">ixora, lavanda, pata-de-vaca</span></p>
+                <p><span className="text-blue-400">internas:</span> <span className="text-amber-400">zamioculca, costela-de-adão</span></p>
+                <p className="mt-3 text-emerald-400">// Produtos</p>
+                <p><span className="text-blue-400">vasos:</span> <span className="text-amber-400">cerâmica, cimento, fibra</span></p>
+                <p><span className="text-blue-400">substrato:</span> <span className="text-amber-400">universal, para cactos, orgânico</span></p>
+                <p><span className="text-blue-400">fertilizante:</span> <span className="text-amber-400">NPK, húmus, fertilizante foliar</span></p>
                 <p className="mt-3 text-emerald-400">// Serviços</p>
-                <p><span className="text-blue-400">entrega:</span> <span className="text-amber-400">inclusa na Grande SP</span></p>
-                <p><span className="text-blue-400">plantio:</span> <span className="text-amber-400">equipe especializada</span></p>
-                <p><span className="text-blue-400">paisagismo:</span> <span className="text-amber-400">visita grátis</span></p>
-                <p className="mt-3 text-emerald-400">// Área de atendimento</p>
-                <p><span className="text-blue-400">regiões:</span> <span className="text-neutral-300">Grande São Paulo</span></p>
+                <p><span className="text-blue-400">projeto:</span> <span className="text-amber-400">visita técnica gratuita</span></p>
+                <p><span className="text-blue-400">entrega:</span> <span className="text-amber-400">Grande SP inclusa</span></p>
               </div>
             </div>
           </div>
@@ -618,7 +618,7 @@ export function Landing() {
               <div className="space-y-4 text-sm text-neutral-400 leading-relaxed">
                 <p>
                   O paisagista está na terra, no projeto, na entrega. Não tem como ficar no celular o dia inteiro.
-                  Enquanto isso, clientes mandam mensagem perguntando sobre palmeiras e preços — e ninguém responde.
+                  Enquanto isso, clientes mandam mensagem perguntando sobre plantas, vasos e projetos — e ninguém responde.
                 </p>
                 <p>
                   <span className="text-white font-medium">40% desses clientes vão pro concorrente</span>{" "}

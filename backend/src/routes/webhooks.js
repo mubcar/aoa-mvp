@@ -12,10 +12,10 @@ const DEFAULT_BUSINESS = {
   id: "00000000-0000-0000-0000-000000000001",
   name: "Flora Multi Verde",
   slug: "flora-multi-verde",
-  services: ["Venda de palmeiras", "Plantas ornamentais", "Paisagismo", "Jardinagem", "Projeto de jardim"],
+  services: ["Plantas ornamentais", "Vasos e cachepôs", "Substrato e terra", "Fertilizantes", "Paisagismo", "Projetos de jardim", "Jardinagem"],
   service_area: "Grande São Paulo",
   business_hours: { start: "08:00", end: "18:00" },
-  ai_prompt_context: `Flora Multi Verde é uma empresa especializada em paisagismo, venda de palmeiras e plantas ornamentais na Grande São Paulo. Trabalhamos com jerivá, palmeira real, palmeira imperial, areca e diversas plantas tropicais e ornamentais. Fazemos entrega e plantio na Grande SP. Também realizamos projetos completos de paisagismo para residências e empresas. Para orçamentos de palmeiras, precisamos saber o tamanho do espaço e o tipo de planta desejada. Projetos de paisagismo incluem visita técnica gratuita.`,
+  ai_prompt_context: `Flora Multi Verde é uma empresa de paisagismo e venda de plantas na Grande São Paulo. Trabalhamos com todo tipo de planta — tropicais, ornamentais, suculentas, plantas internas, ervas e flores. Também vendemos vasos (cerâmica, cimento, fibra), substratos (universal, para cactos, orgânico) e fertilizantes (NPK, húmus, foliar). Fazemos entrega na Grande SP com plantio opcional. Realizamos projetos de paisagismo para residências e empresas com visita técnica gratuita. Para atender bem o cliente precisamos entender o espaço (interno/externo, tamanho, luminosidade) e o que ele busca.`,
 };
 
 /**
