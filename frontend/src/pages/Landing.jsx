@@ -212,13 +212,13 @@ export function Landing() {
   }, [visibleMessages]);
 
   return (
-    <div className="min-h-screen bg-black text-white antialiased overflow-x-hidden">
+    <div className="min-h-screen bg-[#0a1a0d] text-white antialiased overflow-x-hidden">
       <FloatingOrb className="top-20 -left-32" color="bg-emerald-600" />
       <FloatingOrb className="top-96 -right-32" color="bg-blue-600" />
       <FloatingOrb className="top-[60rem] -left-20" color="bg-violet-600" size="w-48 h-48" />
 
       {/* Nav */}
-      <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-black/80 backdrop-blur-xl">
+      <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#0a1a0d]/90 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center">
@@ -313,7 +313,7 @@ export function Landing() {
               <div
                 className="relative min-h-[420px] p-3 space-y-2 overflow-hidden"
                 style={{
-                  backgroundColor: "#0B141A",
+                  backgroundColor: "#0a150c",
                   backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
                 }}
               >
