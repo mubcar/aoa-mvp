@@ -5,7 +5,6 @@ import {
   parseEvolutionWebhook,
   sendLeadNotification,
 } from "../services/evolution.js";
-import { features } from "../config/features.js";
 
 // Generic fallback — used when no business is matched by instance/number.
 // In production each real client has their own business row with custom context.
@@ -57,7 +56,7 @@ export async function webhookRoutes(app) {
   app.post("/evolution", {
     config: {
       rateLimit: {
-        max: 120,         // 120 messages per minute per IP (generous for real use)
+        max: 120,         // 120 messages per minute per IP
         timeWindow: "1 minute",
       },
     },
@@ -148,8 +147,7 @@ export async function webhookRoutes(app) {
       const { reply: aiReply, toolCall } = await processMessage(
         business,
         conversationHistory,
-        text,
-        { paymentEnabled: features.SOLANA_ESCROW }
+        text
       );
 
       // Save assistant message
@@ -192,86 +190,9 @@ export async function webhookRoutes(app) {
         await sendWhatsAppMessage(phoneNumber, aiReply, instanceName);
       }
 
-      // Optionally generate & send Solana Pay deposit link after qualification
-      if (toolCall && features.SOLANA_ESCROW) {
-        try {
-          const { generateDepositLink } = await import("../services/solana-pay.js");
-          const merchantWallet = process.env.SOLANA_MERCHANT_WALLET;
-          if (merchantWallet) {
-            const depositAmounts = { emergency: 50, high: 30, medium: 20, low: 15 };
-            const amount = depositAmounts[toolCall.urgency] || 20;
-            const deposit = generateDepositLink({
-              merchantWallet,
-              amount,
-              leadId: lead.id,
-              businessName: business.name,
-            });
-            await supabase
-              .from("leads")
-              .update({
-                deposit_amount_usdc: deposit.amount,
-                solana_pay_url: deposit.url,
-                status: "deposit_sent",
-                updated_at: new Date().toISOString(),
-              })
-              .eq("id", lead.id);
-            await sendWhatsAppMessage(
-              phoneNumber,
-              `Para garantir seu agendamento, aqui está o link de depósito: ${deposit.url}`,
-              instanceName
-            );
-          }
-        } catch (err) {
-          request.log.warn({ err }, "Failed to auto-generate deposit link");
-        }
-      }
-
       return reply.status(200).send({ ok: true });
     } catch (error) {
       request.log.error(error, "Error processing WhatsApp webhook");
-      return reply.status(500).send({ error: "Internal server error" });
-    }
-  });
-
-  /**
-   * Vapi webhook — voice call completion
-   */
-  app.post("/vapi", async (request, reply) => {
-    try {
-      const payload = request.body;
-
-      if (payload.message?.type !== "end-of-call-report") {
-        return reply.status(200).send({ ok: true });
-      }
-
-      const supabase = getSupabase();
-      if (!supabase) return reply.status(500).send({ error: "Database not configured" });
-
-      const report = payload.message;
-      const phoneNumber = report.customer?.number;
-      const summary = report.summary;
-      const transcript = report.transcript;
-
-      // For Vapi, route by the assistant's phone number or use default
-      const business = DEFAULT_BUSINESS;
-
-      const { data: lead } = await supabase
-        .from("leads")
-        .insert({
-          business_id: business.id,
-          channel: "voice",
-          status: "qualified",
-          contact_phone: phoneNumber,
-          conversation_summary: summary,
-          raw_messages: transcript,
-          qualified_at: new Date().toISOString(),
-        })
-        .select()
-        .single();
-
-      return reply.status(200).send({ ok: true, leadId: lead?.id });
-    } catch (error) {
-      request.log.error(error, "Error processing Vapi webhook");
       return reply.status(500).send({ error: "Internal server error" });
     }
   });

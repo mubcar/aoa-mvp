@@ -1,7 +1,6 @@
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { MessageSquare, Phone, AlertTriangle, Clock, MapPin, DollarSign } from "lucide-react";
-import { useFeatures } from "../hooks/useFeatures";
+import { MessageSquare, AlertTriangle, Clock, MapPin } from "lucide-react";
 
 const urgencyConfig = {
   emergency: { label: "Emergência", color: "bg-red-100 text-red-800 border-red-200" },
@@ -14,28 +13,15 @@ const statusConfig = {
   new: { label: "Novo", color: "bg-blue-100 text-blue-800" },
   qualifying: { label: "Qualificando", color: "bg-purple-100 text-purple-800" },
   qualified: { label: "Qualificado", color: "bg-green-100 text-green-800" },
-  deposit_sent: { label: "Depósito enviado", color: "bg-yellow-100 text-yellow-800" },
-  deposit_paid: { label: "Depósito pago", color: "bg-emerald-100 text-emerald-800" },
   contacted: { label: "Contatado", color: "bg-yellow-100 text-yellow-800" },
   job_scheduled: { label: "Agendado", color: "bg-cyan-100 text-cyan-800" },
   job_complete: { label: "Concluído", color: "bg-gray-100 text-gray-800" },
   lost: { label: "Perdido", color: "bg-red-100 text-red-800" },
 };
 
-// When Solana is off, map deposit statuses to neutral lead statuses
-const nonCryptoStatusMap = {
-  deposit_sent: { label: "Contatado", color: "bg-yellow-100 text-yellow-800" },
-  deposit_paid: { label: "Agendado", color: "bg-cyan-100 text-cyan-800" },
-};
-
 export function LeadCard({ lead, onClick }) {
-  const { features } = useFeatures();
-  const solanaOn = features.solanaEscrow;
   const urgency = urgencyConfig[lead.urgency] || urgencyConfig.low;
-  const status =
-    (!solanaOn && nonCryptoStatusMap[lead.status]) ||
-    statusConfig[lead.status] ||
-    statusConfig.new;
+  const status = statusConfig[lead.status] || statusConfig.new;
   const timeAgo = formatDistanceToNow(new Date(lead.created_at), {
     addSuffix: true,
     locale: ptBR,
@@ -48,11 +34,7 @@ export function LeadCard({ lead, onClick }) {
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-2">
-          {lead.channel === "whatsapp" ? (
-            <MessageSquare className="w-4 h-4 text-green-600" />
-          ) : (
-            <Phone className="w-4 h-4 text-blue-600" />
-          )}
+          <MessageSquare className="w-4 h-4 text-green-600" />
           <span className="font-semibold text-gray-900">
             {lead.contact_name || lead.contact_phone || "Prospect"}
           </span>
@@ -84,13 +66,6 @@ export function LeadCard({ lead, onClick }) {
           <span className="flex items-center gap-1">
             <MapPin className="w-3 h-3" />
             {lead.location}
-          </span>
-        )}
-
-        {solanaOn && lead.deposit_amount_usdc && (
-          <span className="flex items-center gap-1 text-emerald-600 font-medium">
-            <DollarSign className="w-3 h-3" />
-            {lead.deposit_amount_usdc} USDC
           </span>
         )}
 

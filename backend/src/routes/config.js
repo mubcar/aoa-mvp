@@ -1,9 +1,6 @@
-import { features, getPaymentMode } from "../config/features.js";
-
 export async function configRoutes(app) {
-  // Public: frontend reads this to conditionally render payment UI
+  // Public: returns active feature flags (reserved for future use)
   app.get("/features", async () => ({
-    solanaEscrow: features.SOLANA_ESCROW,
-    paymentMode: getPaymentMode(),
+    paymentMode: "none",
   }));
 }

@@ -1,17 +1,12 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
-import { X, MessageSquare, Phone, Bot, User, ExternalLink } from "lucide-react";
+import { X, MessageSquare, Bot, User } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { useFeatures } from "../hooks/useFeatures";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export function LeadDetail({ lead, onClose }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { features } = useFeatures();
-  const solanaOn = features.solanaEscrow;
 
   useEffect(() => {
     async function fetchMessages() {
@@ -43,32 +38,6 @@ export function LeadDetail({ lead, onClose }) {
     return () => supabase.removeChannel(channel);
   }, [lead.id]);
 
-  async function handleGenerateDeposit() {
-    try {
-      const res = await fetch(`${API_URL}/api/payments/create-deposit`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId: lead.id }),
-      });
-      const data = await res.json();
-      if (data.url) alert(`Link gerado: ${data.url}`);
-    } catch (err) {
-      console.error("Failed to generate deposit:", err);
-    }
-  }
-
-  async function handleConfirmDeposit() {
-    try {
-      await fetch(`${API_URL}/api/payments/confirm-deposit`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId: lead.id }),
-      });
-    } catch (err) {
-      console.error("Failed to confirm deposit:", err);
-    }
-  }
-
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       <div className="absolute inset-0 bg-black/30" onClick={onClose} />
@@ -80,11 +49,7 @@ export function LeadDetail({ lead, onClose }) {
               {lead.contact_name || "Prospect"}
             </h2>
             <p className="text-sm text-gray-500 flex items-center gap-1">
-              {lead.channel === "whatsapp" ? (
-                <MessageSquare className="w-3 h-3 text-green-600" />
-              ) : (
-                <Phone className="w-3 h-3 text-blue-600" />
-              )}
+              <MessageSquare className="w-3 h-3 text-green-600" />
               {lead.contact_phone} · {formatDistanceToNow(new Date(lead.created_at), { addSuffix: true, locale: ptBR })}
             </p>
           </div>
@@ -140,31 +105,14 @@ export function LeadDetail({ lead, onClose }) {
           )}
         </div>
 
-        {/* Actions */}
-        <div className="p-4 border-t space-y-2">
-          {solanaOn && lead.status === "qualified" && (
-            <button
-              onClick={handleGenerateDeposit}
-              className="w-full py-2 px-4 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors flex items-center justify-center gap-2"
-            >
-              <ExternalLink className="w-4 h-4" />
-              Gerar link de depósito (Solana Pay)
-            </button>
-          )}
-          {solanaOn && lead.status === "deposit_sent" && (
-            <button
-              onClick={handleConfirmDeposit}
-              className="w-full py-2 px-4 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors"
-            >
-              Confirmar depósito (demo)
-            </button>
-          )}
-          {!solanaOn && lead.status === "qualified" && (
+        {/* Status note for qualified leads */}
+        {lead.status === "qualified" && (
+          <div className="p-4 border-t">
             <p className="text-sm text-gray-500 text-center">
               Lead qualificado — entre em contato para agendar.
             </p>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -96,9 +96,9 @@ export async function leadsRoutes(app) {
     if (!request.businessId) {
       return {
         total: 0, qualified: 0, today: 0, week: 0, month: 0,
-        depositsConfirmed: 0, conversionRate: 0,
+        conversionRate: 0,
         avgResponseTimeSeconds: null,
-        channelBreakdown: { whatsapp: 0, voice: 0 },
+        channelBreakdown: { whatsapp: 0 },
         urgencyBreakdown: {},
       };
     }
@@ -119,7 +119,6 @@ export async function leadsRoutes(app) {
     const today = allLeads?.filter((l) => l.created_at >= todayStart).length || 0;
     const week = allLeads?.filter((l) => l.created_at >= weekStart).length || 0;
     const month = allLeads?.filter((l) => l.created_at >= monthStart).length || 0;
-    const depositsConfirmed = allLeads?.filter((l) => l.status === "deposit_paid" || l.status === "job_complete").length || 0;
 
     // Average response time: time between first prospect msg and first assistant msg per lead
     let avgResponseTimeSeconds = null;
@@ -154,12 +153,10 @@ export async function leadsRoutes(app) {
       today,
       week,
       month,
-      depositsConfirmed,
       conversionRate: total > 0 ? ((qualified / total) * 100).toFixed(1) : 0,
       avgResponseTimeSeconds,
       channelBreakdown: {
         whatsapp: allLeads?.filter((l) => l.channel === "whatsapp").length || 0,
-        voice: allLeads?.filter((l) => l.channel === "voice").length || 0,
       },
       urgencyBreakdown: {
         emergency: allLeads?.filter((l) => l.urgency === "emergency").length || 0,
@@ -168,60 +165,5 @@ export async function leadsRoutes(app) {
         low: allLeads?.filter((l) => l.urgency === "low").length || 0,
       },
     };
-  });
-
-  // Alias: POST /api/leads/:id/deposit → delegates to payments create-deposit logic
-  app.post("/:id/deposit", async (request, reply) => {
-    const { features } = await import("../config/features.js");
-    const supabase = getSupabase();
-    const { id: leadId } = request.params;
-    const { amount } = request.body || {};
-
-    const { data: lead, error } = await supabase
-      .from("leads")
-      .select("*")
-      .eq("id", leadId)
-      .eq("business_id", request.businessId)
-      .single();
-
-    if (error || !lead) return reply.status(404).send({ error: "Lead not found" });
-
-    if (!features.SOLANA_ESCROW) {
-      await supabase
-        .from("leads")
-        .update({ status: "qualified", updated_at: new Date().toISOString() })
-        .eq("id", leadId);
-      return { mode: "none", message: "Payment integration disabled" };
-    }
-
-    if (lead.solana_pay_url) {
-      return { url: lead.solana_pay_url, message: "Deposit link already generated" };
-    }
-
-    const { generateDepositLink } = await import("../services/solana-pay.js");
-    const merchantWallet = process.env.SOLANA_MERCHANT_WALLET;
-    if (!merchantWallet) return reply.status(500).send({ error: "Merchant wallet not configured" });
-
-    const DEPOSIT_AMOUNTS = { emergency: 50, high: 30, medium: 20, low: 15 };
-    const depositAmount = amount || DEPOSIT_AMOUNTS[lead.urgency] || 20;
-
-    const deposit = generateDepositLink({
-      merchantWallet,
-      amount: depositAmount,
-      leadId: lead.id,
-      businessName: request.business?.name || "AOA",
-    });
-
-    await supabase
-      .from("leads")
-      .update({
-        deposit_amount_usdc: deposit.amount,
-        solana_pay_url: deposit.url,
-        status: "deposit_sent",
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", leadId);
-
-    return { url: deposit.url, amount: deposit.amount, reference: deposit.reference };
   });
 }

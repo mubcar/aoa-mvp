@@ -4,7 +4,6 @@ import cors from "@fastify/cors";
 import rateLimit from "@fastify/rate-limit";
 import { webhookRoutes } from "./routes/webhooks.js";
 import { leadsRoutes } from "./routes/leads.js";
-import { paymentsRoutes } from "./routes/payments.js";
 import { testChatRoutes } from "./routes/test-chat.js";
 import { bookingRoutes } from "./routes/booking.js";
 import { configRoutes } from "./routes/config.js";
@@ -58,7 +57,6 @@ app.get("/health", async () => {
 // Register routes
 app.register(webhookRoutes, { prefix: "/api/webhooks" });
 app.register(leadsRoutes, { prefix: "/api/leads" });
-app.register(paymentsRoutes, { prefix: "/api/payments" });
 app.register(testChatRoutes, { prefix: "/api/test-chat" });
 app.register(bookingRoutes, { prefix: "/api/booking" });
 app.register(configRoutes, { prefix: "/api/config" });
