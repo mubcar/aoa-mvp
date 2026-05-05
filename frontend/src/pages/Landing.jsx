@@ -254,7 +254,7 @@ export function Landing() {
             Pare de perder clientes
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-blue-400 to-violet-400">
-              enquanto planta.
+              enquanto trabalha.
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
