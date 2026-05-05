@@ -233,9 +233,6 @@ export function Landing() {
             <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
           </div>
           <div className="flex items-center gap-3">
-            <a href="https://calendly.com/mubcarvalho/30min" target="_blank" rel="noopener noreferrer" className="text-sm text-neutral-400 hover:text-white transition-colors hidden sm:block">
-              Login
-            </a>
             <a href="https://calendly.com/mubcarvalho/30min" target="_blank" rel="noopener noreferrer" className="text-sm font-medium bg-gradient-to-r from-emerald-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">
               Começar
             </a>
@@ -736,7 +733,6 @@ export function Landing() {
               <a href="#recursos" className="hover:text-white transition-colors">Recursos</a>
               <a href="#plano" className="hover:text-white transition-colors">Plano</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
-              <a href="https://calendly.com/mubcarvalho/30min" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Login</a>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-white/5">
