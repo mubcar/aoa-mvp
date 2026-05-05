@@ -45,7 +45,7 @@ const FEATURES = [
   {
     icon: Bell,
     title: "Notificação no seu WhatsApp",
-    desc: "Quando um cliente está pronto, você recebe um resumo: nome, o que quer, tamanho do jardim, localização e horário preferido.",
+    desc: "Quando um cliente está pronto, o resumo cai no grupo do WhatsApp da sua equipe: nome, serviço, localização e horário preferido.",
     color: "from-blue-500/20 to-blue-600/5",
     iconColor: "text-blue-400",
     borderColor: "border-blue-500/20 hover:border-blue-500/40",
@@ -59,9 +59,9 @@ const FEATURES = [
     borderColor: "border-amber-500/20 hover:border-amber-500/40",
   },
   {
-    icon: BarChart3,
-    title: "Dashboard em tempo real",
-    desc: "Todos os clientes organizados por urgência, serviço desejado e localização. Acesse do celular, onde estiver.",
+    icon: Users,
+    title: "Grupo exclusivo no WhatsApp",
+    desc: "Cada cliente qualificado chega direto no seu grupo. Você e sua equipe recebem o resumo em tempo real, sem app extra.",
     color: "from-cyan-500/20 to-cyan-600/5",
     iconColor: "text-cyan-400",
     borderColor: "border-cyan-500/20 hover:border-cyan-500/40",
@@ -101,8 +101,8 @@ const STEPS = [
   },
   {
     num: "03",
-    title: "Clientes chegam no seu WhatsApp",
-    desc: "A IA passa a atender. Cada cliente qualificado chega pra você com nome, o que quer e onde está. Só fechar.",
+    title: "Resumo cai no grupo da sua equipe",
+    desc: "A IA atende, qualifica e manda o resumo direto no seu grupo do WhatsApp — nome, serviço, localização, horário. Só fechar.",
     color: "from-violet-500 to-violet-600",
     glow: "bg-violet-500/20",
     icon: MessageSquare,
@@ -259,7 +259,7 @@ export function Landing() {
           </h1>
           <p className="text-lg sm:text-xl text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
             IA que responde seu WhatsApp, conhece seu catálogo de plantas, vasos e insumos,
-            qualifica cada cliente e te manda o resumo pronto para fechar o negócio.
+            qualifica cada cliente e manda o resumo direto no grupo do WhatsApp da sua equipe.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
@@ -421,8 +421,7 @@ export function Landing() {
               <div className="flex-1">
                 <h3 className="text-base font-semibold mb-1">A conversa de setup é o ponto de partida</h3>
                 <p className="text-sm text-neutral-400 leading-relaxed">
-                  Avaliamos seu catálogo, preços, área de atendimento e como você prefere receber os clientes.
-                  Só depois configuramos sua IA. Levamos no máximo 30 minutos.
+                  Avaliamos seu catálogo, preços e área de atendimento. Criamos seu grupo no WhatsApp e adicionamos você e sua equipe. Levamos no máximo 30 minutos.
                 </p>
               </div>
               <a
@@ -495,7 +494,7 @@ export function Landing() {
           <p className="text-xs font-medium text-cyan-400 tracking-widest uppercase mb-4">Personalização</p>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-6">A IA aprende o seu negócio.</h2>
           <p className="text-neutral-400 mb-12 max-w-2xl">
-            Não é uma IA genérica. Na conversa de setup mapeamos tudo: plantas, vasos, substratos, fertilizantes, serviços — e como você prefere atender.
+            Não é uma IA genérica. Na conversa de setup mapeamos tudo: plantas, vasos, substratos, fertilizantes, serviços — e criamos seu grupo no WhatsApp para você e sua equipe receberem os clientes em tempo real.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
@@ -557,8 +556,8 @@ export function Landing() {
               {[
                 "Atendimentos ilimitados no WhatsApp",
                 "IA treinada no seu catálogo específico",
-                "Notificações de clientes no seu WhatsApp",
-                "Dashboard em tempo real",
+                "Resumo de cada cliente no grupo da equipe",
+                "Grupo exclusivo no WhatsApp (você + equipe)",
                 "Conversa de setup personalizada",
                 "Suporte direto com nossa equipe",
                 "Cancele quando quiser",
@@ -631,7 +630,7 @@ export function Landing() {
                   que respondeu mais rápido. Não importa se você tem o catálogo mais bonito.
                 </p>
                 <p>
-                  A AOA coloca uma IA no seu WhatsApp que conhece cada planta do seu catálogo, responde como você responderia e te manda o cliente pronto para fechar.
+                  A AOA coloca uma IA no seu WhatsApp que conhece cada planta do seu catálogo, responde como você responderia e manda o resumo do cliente direto no grupo da sua equipe.
                 </p>
               </div>
             </div>
@@ -660,8 +659,8 @@ export function Landing() {
                 },
                 {
                   icon: Bell,
-                  title: "Cliente pronto no seu WhatsApp",
-                  desc: "Cada cliente qualificado chega pra você com nome, o que quer, onde fica e o melhor horário.",
+                  title: "Resumo no grupo da sua equipe",
+                  desc: "Cada cliente qualificado cai no grupo do WhatsApp com nome, serviço, localização e melhor horário.",
                   color: "text-amber-400",
                   bg: "bg-amber-500/10 border-amber-500/20",
                 },
