@@ -45,7 +45,7 @@ const FEATURES = [
   {
     icon: Bell,
     title: "Notificação no seu WhatsApp",
-    desc: "Quando um cliente é qualificado, você recebe um resumo: nome, o que quer, tamanho do jardim, localização e horário preferido.",
+    desc: "Quando um cliente está pronto, você recebe um resumo: nome, o que quer, tamanho do jardim, localização e horário preferido.",
     color: "from-blue-500/20 to-blue-600/5",
     iconColor: "text-blue-400",
     borderColor: "border-blue-500/20 hover:border-blue-500/40",
@@ -61,7 +61,7 @@ const FEATURES = [
   {
     icon: BarChart3,
     title: "Dashboard em tempo real",
-    desc: "Todos os leads organizados por urgência, serviço desejado e localização. Acesse do celular, onde estiver.",
+    desc: "Todos os clientes organizados por urgência, serviço desejado e localização. Acesse do celular, onde estiver.",
     color: "from-cyan-500/20 to-cyan-600/5",
     iconColor: "text-cyan-400",
     borderColor: "border-cyan-500/20 hover:border-cyan-500/40",
@@ -101,7 +101,7 @@ const STEPS = [
   },
   {
     num: "03",
-    title: "Leads chegam no seu WhatsApp",
+    title: "Clientes chegam no seu WhatsApp",
     desc: "A IA passa a atender. Cada cliente qualificado chega pra você com nome, o que quer e onde está. Só fechar.",
     color: "from-violet-500 to-violet-600",
     glow: "bg-violet-500/20",
@@ -140,7 +140,7 @@ const FAQ = [
   },
   {
     q: "Como a IA sabe sobre o meu catálogo?",
-    a: "Na conversa de setup, nossa equipe mapeia tudo: quais plantas, vasos, substratos e outros insumos você trabalha, faixas de preço, área de atendimento e como você prefere receber os leads. A IA é configurada especificamente para o seu negócio.",
+    a: "Na conversa de setup, nossa equipe mapeia tudo: quais plantas, vasos, substratos e outros insumos você trabalha, faixas de preço, área de atendimento e como você prefere receber os clientes. A IA é configurada especificamente para o seu negócio.",
   },
   {
     q: "E se o cliente perguntar algo fora do catálogo?",
@@ -357,7 +357,7 @@ export function Landing() {
                     <div className="px-4 py-2 rounded-xl bg-emerald-500/20 border border-emerald-500/30 shadow-lg shadow-emerald-500/10">
                       <p className="text-xs text-emerald-400 font-semibold flex items-center gap-2">
                         <Check className="w-3.5 h-3.5" />
-                        Lead qualificado · Pinheiros · Kit varanda com flores
+                        Cliente qualificado · Pinheiros · Kit varanda com flores
                       </p>
                     </div>
                   </div>
@@ -421,7 +421,7 @@ export function Landing() {
               <div className="flex-1">
                 <h3 className="text-base font-semibold mb-1">A conversa de setup é o ponto de partida</h3>
                 <p className="text-sm text-neutral-400 leading-relaxed">
-                  Avaliamos seu catálogo, preços, área de atendimento e como você prefere receber os leads.
+                  Avaliamos seu catálogo, preços, área de atendimento e como você prefere receber os clientes.
                   Só depois configuramos sua IA. Levamos no máximo 30 minutos.
                 </p>
               </div>
@@ -557,7 +557,7 @@ export function Landing() {
               {[
                 "Atendimentos ilimitados no WhatsApp",
                 "IA treinada no seu catálogo específico",
-                "Notificações de leads no seu WhatsApp",
+                "Notificações de clientes no seu WhatsApp",
                 "Dashboard em tempo real",
                 "Conversa de setup personalizada",
                 "Suporte direto com nossa equipe",
@@ -631,7 +631,7 @@ export function Landing() {
                   que respondeu mais rápido. Não importa se você tem o catálogo mais bonito.
                 </p>
                 <p>
-                  A AOA coloca uma IA no seu WhatsApp que conhece cada planta do seu catálogo, responde como você responderia e te manda o lead pronto para fechar.
+                  A AOA coloca uma IA no seu WhatsApp que conhece cada planta do seu catálogo, responde como você responderia e te manda o cliente pronto para fechar.
                 </p>
               </div>
             </div>
@@ -660,7 +660,7 @@ export function Landing() {
                 },
                 {
                   icon: Bell,
-                  title: "Lead pronto no seu WhatsApp",
+                  title: "Cliente pronto no seu WhatsApp",
                   desc: "Cada cliente qualificado chega pra você com nome, o que quer, onde fica e o melhor horário.",
                   color: "text-amber-400",
                   bg: "bg-amber-500/10 border-amber-500/20",
