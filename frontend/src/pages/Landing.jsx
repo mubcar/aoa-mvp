@@ -236,7 +236,7 @@ export function Landing() {
             <a href="/login" className="text-sm text-neutral-400 hover:text-white transition-colors hidden sm:block">
               Login
             </a>
-            <a href="/login" className="text-sm font-medium bg-gradient-to-r from-emerald-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">
+            <a href="https://calendly.com/mubcarvalho/30min" target="_blank" rel="noopener noreferrer" className="text-sm font-medium bg-gradient-to-r from-emerald-500 to-blue-500 text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">
               Começar
             </a>
           </div>
@@ -263,7 +263,9 @@ export function Landing() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
-              href="/login"
+              href="https://calendly.com/mubcarvalho/30min"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-semibold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-sm shadow-lg shadow-emerald-500/20"
             >
               Agendar conversa de setup
@@ -569,7 +571,9 @@ export function Landing() {
             </ul>
 
             <a
-              href="/login"
+              href="https://calendly.com/mubcarvalho/30min"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block w-full py-4 bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-semibold rounded-xl hover:opacity-90 transition-opacity text-sm shadow-lg shadow-emerald-500/20"
             >
               Agendar conversa de setup →
@@ -692,7 +696,7 @@ export function Landing() {
               Agende uma conversa de 30 minutos. Nossa equipe avalia seu catálogo e configura tudo.
             </p>
             <form
-              onSubmit={(e) => { e.preventDefault(); window.location.href = "/login"; }}
+              onSubmit={(e) => { e.preventDefault(); window.open("https://calendly.com/mubcarvalho/30min", "_blank"); }}
               className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
             >
               <input
