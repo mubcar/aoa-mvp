@@ -136,7 +136,7 @@ const TESTIMONIALS = [
 const FAQ = [
   {
     q: "Preciso trocar meu número de WhatsApp?",
-    a: "Não. A AOA conecta diretamente no seu número atual. Seus clientes continuam mandando mensagem pro mesmo número de sempre.",
+    a: "Não. A Hermes Automações conecta diretamente no seu número atual. Seus clientes continuam mandando mensagem pro mesmo número de sempre.",
   },
   {
     q: "Como a IA sabe sobre o meu catálogo?",
@@ -224,7 +224,7 @@ export function Landing() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center">
               <Zap className="w-4 h-4 text-white" />
             </div>
-            <span className="text-lg font-bold tracking-tight">AOA</span>
+            <span className="text-lg font-bold tracking-tight">Hermes Automações</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-neutral-400">
             <a href="#como-funciona" className="hover:text-white transition-colors">Como funciona</a>
@@ -609,13 +609,13 @@ export function Landing() {
         </div>
       </section>
 
-      {/* Why AOA */}
+      {/* Why Hermes Automações */}
       <section className="px-6 py-24 border-t border-white/5 relative">
         <FloatingOrb className="top-0 left-1/2 -translate-x-1/2" color="bg-violet-600" size="w-96 h-96" />
         <div className="max-w-4xl mx-auto relative">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-xs font-medium text-violet-400 tracking-widest uppercase mb-4">Por que a AOA?</p>
+              <p className="text-xs font-medium text-violet-400 tracking-widest uppercase mb-4">Por que a Hermes Automações?</p>
               <h2 className="text-3xl font-bold tracking-tight mb-6">
                 Cada mensagem sem resposta é um jardim que você não vai plantar.
               </h2>
@@ -629,11 +629,11 @@ export function Landing() {
                   que respondeu mais rápido. Não importa se você tem o catálogo mais bonito ou o melhor preço.
                 </p>
                 <p>
-                  <span className="text-white font-medium">A AOA nunca dorme.</span>{" "}
+                  <span className="text-white font-medium">A Hermes Automações nunca dorme.</span>{" "}
                   Responde em segundos, 24 horas por dia, 7 dias por semana — incluindo fins de semana e feriados. Nenhum cliente perdido por causa do horário.
                 </p>
                 <p>
-                  A AOA coloca uma IA no seu WhatsApp que conhece cada planta do seu catálogo, responde como você responderia e manda o resumo do cliente direto no grupo da sua equipe.
+                  A Hermes Automações coloca uma IA no seu WhatsApp que conhece cada planta do seu catálogo, responde como você responderia e manda o resumo do cliente direto no grupo da sua equipe.
                 </p>
               </div>
             </div>
@@ -729,7 +729,7 @@ export function Landing() {
               <div className="w-6 h-6 rounded-md bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center">
                 <Zap className="w-3 h-3 text-white" />
               </div>
-              <span className="text-sm font-bold">AOA</span>
+              <span className="text-sm font-bold">Hermes Automações</span>
               <span className="text-xs text-neutral-600">Para paisagistas e viveiristas.</span>
             </div>
             <div className="flex items-center gap-6 text-xs text-neutral-500">
@@ -740,7 +740,7 @@ export function Landing() {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-white/5">
-            <p className="text-xs text-neutral-700">© 2026 AOA. Todos os direitos reservados.</p>
+            <p className="text-xs text-neutral-700">© 2026 Hermes Automações. Todos os direitos reservados.</p>
             <p className="text-xs text-neutral-700">Feito com IA para quem faz com as mãos.</p>
           </div>
         </div>
