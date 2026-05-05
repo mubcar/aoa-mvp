@@ -424,10 +424,12 @@ export function Landing() {
                 </p>
               </div>
               <a
-                href="/login"
+                href="https://calendly.com/mubcarvalho/30min"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex-shrink-0 px-5 py-2.5 bg-emerald-500 text-white text-sm font-semibold rounded-xl hover:bg-emerald-400 transition-colors"
               >
-                Agendar agora
+                Agendar Ligação
               </a>
             </div>
           </div>
