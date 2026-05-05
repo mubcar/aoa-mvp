@@ -455,34 +455,6 @@ export function Landing() {
       </section>
 
       {/* Testimonials */}
-      <section className="px-6 py-24 border-t border-white/5">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-xs font-medium text-amber-400 tracking-widest uppercase mb-4">Depoimentos</p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-16">Quem usa, recomenda.</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map((t) => (
-              <div key={t.name} className="p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
-                <div className="flex gap-0.5 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
-                  ))}
-                </div>
-                <p className="text-sm text-neutral-300 leading-relaxed mb-6">"{t.text}"</p>
-                <div className="flex items-center gap-3">
-                  <div className={`w-9 h-9 rounded-full ${t.color} flex items-center justify-center text-xs font-bold text-white`}>
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold">{t.name}</p>
-                    <p className="text-xs text-neutral-500">{t.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* How the AI learns your catalog */}
       <section className="px-6 py-24 border-t border-white/5 relative">
         <FloatingOrb className="bottom-0 right-0" color="bg-emerald-600" size="w-72 h-72" />
