@@ -52,8 +52,8 @@ const FEATURES = [
   },
   {
     icon: Clock,
-    title: "Atende enquanto você trabalha",
-    desc: "Você está plantando, fazendo projeto, na estrada. A IA responde em menos de 3 segundos. Nenhum cliente perdido.",
+    title: "24h por dia, 7 dias por semana",
+    desc: "Sábado à noite, domingo de manhã, feriado — não importa. A IA responde em segundos e nunca deixa um cliente sem resposta por causa do horário.",
     color: "from-amber-500/20 to-amber-600/5",
     iconColor: "text-amber-400",
     borderColor: "border-amber-500/20 hover:border-amber-500/40",
@@ -77,8 +77,8 @@ const FEATURES = [
 ];
 
 const STATS = [
-  { value: "40%", label: "dos clientes perdidos por falta de resposta no WhatsApp", color: "text-red-400" },
-  { value: "3s", label: "tempo médio de resposta da nossa IA", color: "text-emerald-400" },
+  { value: "40%", label: "dos clientes perdidos por mensagem sem resposta no WhatsApp", color: "text-red-400" },
+  { value: "24/7", label: "a IA responde em segundos — qualquer hora, qualquer dia", color: "text-emerald-400" },
   { value: "2.5x", label: "mais orçamentos fechados com atendimento instantâneo", color: "text-blue-400" },
 ];
 
@@ -248,7 +248,7 @@ export function Landing() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-xs text-emerald-400 mb-8">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Para paisagistas e vendedores de plantas
+            Atendimento 24/7 para paisagistas e vendedores de plantas
           </div>
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
             Pare de perder clientes
@@ -258,8 +258,7 @@ export function Landing() {
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            IA que responde seu WhatsApp, conhece seu catálogo de plantas, vasos e insumos,
-            qualifica cada cliente e manda o resumo direto no grupo do WhatsApp da sua equipe.
+            IA que responde seu WhatsApp 24h por dia, 7 dias por semana — em segundos. Conhece seu catálogo de plantas, vasos e insumos, qualifica cada cliente e manda o resumo direto no grupo da sua equipe. Nunca perde um cliente por falta de resposta.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
@@ -623,11 +622,15 @@ export function Landing() {
               <div className="space-y-4 text-sm text-neutral-400 leading-relaxed">
                 <p>
                   O paisagista está na terra, no projeto, na entrega. Não tem como ficar no celular o dia inteiro.
-                  Enquanto isso, clientes mandam mensagem perguntando sobre plantas, vasos e projetos — e ninguém responde.
+                  Enquanto isso, clientes mandam mensagem perguntando sobre plantas, vasos e projetos — às 22h, no domingo, no feriado — e ninguém responde.
                 </p>
                 <p>
                   <span className="text-white font-medium">40% desses clientes vão pro concorrente</span>{" "}
-                  que respondeu mais rápido. Não importa se você tem o catálogo mais bonito.
+                  que respondeu mais rápido. Não importa se você tem o catálogo mais bonito ou o melhor preço.
+                </p>
+                <p>
+                  <span className="text-white font-medium">A AOA nunca dorme.</span>{" "}
+                  Responde em segundos, 24 horas por dia, 7 dias por semana — incluindo fins de semana e feriados. Nenhum cliente perdido por causa do horário.
                 </p>
                 <p>
                   A AOA coloca uma IA no seu WhatsApp que conhece cada planta do seu catálogo, responde como você responderia e manda o resumo do cliente direto no grupo da sua equipe.
@@ -645,8 +648,8 @@ export function Landing() {
                 },
                 {
                   icon: Clock,
-                  title: "Foque no que você sabe fazer",
-                  desc: "Para de responder mensagem enquanto planta ou faz projeto. A IA faz isso por você.",
+                  title: "Responde 24/7 — até de madrugada",
+                  desc: "Cliente mandou mensagem às 23h de sábado? A IA responde na hora. Você vê o resumo no grupo quando acordar.",
                   color: "text-blue-400",
                   bg: "bg-blue-500/10 border-blue-500/20",
                 },
