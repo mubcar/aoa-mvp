@@ -258,7 +258,7 @@ export function Landing() {
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            IA que responde seu WhatsApp 24h por dia, 7 dias por semana — em segundos. Conhece seu catálogo de plantas, vasos e insumos, qualifica cada cliente e manda o resumo direto no grupo da sua equipe. Nunca perde um cliente por falta de resposta.
+            Assistente Virtual que responde seu WhatsApp 24 horas por dia, 7 dias por semana imediatamente. Conhece seu catálogo, qualifica o cliente e manda o resumo no grupo da sua equipe para fechar a compra.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
