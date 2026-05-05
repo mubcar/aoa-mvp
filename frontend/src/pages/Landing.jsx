@@ -119,7 +119,7 @@ const TESTIMONIALS = [
   },
   {
     name: "Fernanda Jardins",
-    role: "Paisagista — Espaço Verde SP",
+    role: "Espaço Verde SP",
     text: "O melhor é que a IA já sabe quais plantas, vasos e substratos eu trabalho e os preços. O cliente chega na conversa já informado. Economia de tempo enorme.",
     avatar: "FJ",
     color: "bg-blue-600",
@@ -248,7 +248,7 @@ export function Landing() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-xs text-emerald-400 mb-8">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Atendimento 24/7 para paisagistas e viveiristas
+            Atendimento 24/7 para o Mercado de Plantas
           </div>
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
             Pare de perder clientes
@@ -441,7 +441,7 @@ export function Landing() {
         <FloatingOrb className="top-40 -left-32" color="bg-violet-600" />
         <div className="max-w-4xl mx-auto">
           <p className="text-xs font-medium text-violet-400 tracking-widest uppercase mb-4">Recursos</p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Feito para paisagistas e viveiristas.</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Feito para o Mercado de Plantas.</h2>
           <p className="text-2xl sm:text-3xl font-bold text-neutral-500 mb-16">Não para empresas genéricas.</p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {FEATURES.map((f) => (
@@ -621,7 +621,7 @@ export function Landing() {
               </h2>
               <div className="space-y-4 text-sm text-neutral-400 leading-relaxed">
                 <p>
-                  O paisagista está na terra, no projeto, na entrega. O viveirista está no viveiro, na colheita, na organização do estoque. Nenhum dos dois tem como ficar no celular o dia inteiro.
+                  Quem trabalha no mercado de plantas está na terra, no viveiro, no projeto, na entrega. Não tem como ficar no celular o dia inteiro.
                   Enquanto isso, clientes mandam mensagem perguntando sobre plantas, vasos e projetos — às 22h, no domingo, no feriado — e ninguém responde.
                 </p>
                 <p>
@@ -730,7 +730,7 @@ export function Landing() {
                 <Zap className="w-3 h-3 text-white" />
               </div>
               <span className="text-sm font-bold">Hermes Automações</span>
-              <span className="text-xs text-neutral-600">Para paisagistas e viveiristas.</span>
+              <span className="text-xs text-neutral-600">Para o Mercado de Plantas.</span>
             </div>
             <div className="flex items-center gap-6 text-xs text-neutral-500">
               <a href="#recursos" className="hover:text-white transition-colors">Recursos</a>
