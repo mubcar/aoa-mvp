@@ -295,7 +295,7 @@ export function Landing() {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-neutral-900 rounded-b-2xl z-10" />
             <div className="rounded-[2rem] overflow-hidden">
               {/* WhatsApp header */}
-              <div className="bg-[#075E54] px-4 py-3 flex items-center gap-3">
+              <div className="bg-[#075E54] px-4 pt-8 pb-3 flex items-center gap-3">
                 <div className="w-2 h-2" />
                 <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center flex-shrink-0">
                   <TreePine className="w-4 h-4 text-white" />
