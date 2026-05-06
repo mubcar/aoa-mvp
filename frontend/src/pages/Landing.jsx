@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Zap,
   MessageSquare,
@@ -198,18 +198,75 @@ function FloatingOrb({ className, color, size = "w-64 h-64" }) {
 
 export function Landing() {
   const [email, setEmail] = useState("");
-  const [visibleMessages, setVisibleMessages] = useState(0);
   const [openFaq, setOpenFaq] = useState(null);
 
+  // Chat animation state
+  const [shownMessages, setShownMessages] = useState([]);
+  const [inputText, setInputText] = useState("");
+  const [isAiTyping, setIsAiTyping] = useState(false);
+  const [isDone, setIsDone] = useState(false);
+  const chatEndRef = useRef(null);
+
+  // Auto-scroll chat to bottom
   useEffect(() => {
-    if (visibleMessages < CHAT_MESSAGES.length) {
-      const timer = setTimeout(
-        () => setVisibleMessages((v) => v + 1),
-        visibleMessages === 0 ? 800 : 1200
-      );
-      return () => clearTimeout(timer);
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [shownMessages, isAiTyping]);
+
+  // Main animation loop
+  useEffect(() => {
+    let cancelled = false;
+    const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
+
+    async function runChat() {
+      await sleep(800);
+      for (let i = 0; i < CHAT_MESSAGES.length; i++) {
+        if (cancelled) return;
+        const msg = CHAT_MESSAGES[i];
+
+        if (msg.from === "client") {
+          // Type text into input bar char by char
+          for (let j = 1; j <= msg.text.length; j++) {
+            if (cancelled) return;
+            setInputText(msg.text.slice(0, j));
+            await sleep(28 + Math.random() * 22);
+          }
+          await sleep(350);
+          // Send: clear input, add message with single tick
+          setInputText("");
+          setShownMessages((prev) => [...prev, { ...msg, ticks: 1 }]);
+          await sleep(400);
+          // Double blue ticks (read)
+          setShownMessages((prev) =>
+            prev.map((m, idx) => (idx === prev.length - 1 ? { ...m, ticks: 2 } : m))
+          );
+          await sleep(300);
+        } else {
+          // Show AI typing dots
+          setIsAiTyping(true);
+          const duration = Math.min(Math.max(msg.text.length * 16, 1200), 2800);
+          await sleep(duration);
+          if (cancelled) return;
+          setIsAiTyping(false);
+          setShownMessages((prev) => [...prev, msg]);
+          await sleep(500);
+        }
+      }
+
+      if (!cancelled) {
+        setIsDone(true);
+        await sleep(4000);
+        if (!cancelled) {
+          setShownMessages([]);
+          setIsDone(false);
+          setInputText("");
+          runChat();
+        }
+      }
     }
-  }, [visibleMessages]);
+
+    runChat();
+    return () => { cancelled = true; };
+  }, []);
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white antialiased overflow-x-hidden">
@@ -309,24 +366,25 @@ export function Landing() {
 
               {/* Chat area */}
               <div
-                className="relative min-h-[420px] p-3 space-y-2 overflow-hidden"
+                className="relative h-[420px] p-3 space-y-2 overflow-y-auto overflow-x-hidden"
                 style={{
                   backgroundColor: "#0d1117",
                   backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                  scrollbarWidth: "none",
                 }}
               >
                 <div className="flex justify-center mb-2">
                   <span className="bg-[#182229] text-[10px] text-neutral-400 px-3 py-1 rounded-lg shadow-sm">HOJE</span>
                 </div>
 
-                {CHAT_MESSAGES.slice(0, visibleMessages).map((msg, i) => (
+                {shownMessages.map((msg, i) => (
                   <div key={i} className={`flex ${msg.from === "client" ? "justify-end" : "justify-start"} animate-fade-in`}>
                     <div className={`max-w-[85%] px-3 py-2 rounded-lg shadow-sm ${msg.from === "client" ? "bg-[#005C4B] rounded-tr-none" : "bg-[#202C33] rounded-tl-none"}`}>
                       <p className="text-[13px] text-neutral-200 leading-relaxed">{msg.text}</p>
                       <div className="flex items-center justify-end gap-1 mt-1">
                         <span className="text-[10px] text-neutral-500">{msg.time}</span>
                         {msg.from === "client" && (
-                          <svg className="w-3.5 h-3.5 text-blue-400" viewBox="0 0 16 11" fill="currentColor">
+                          <svg className={`w-3.5 h-3.5 ${msg.ticks === 2 ? "text-blue-400" : "text-neutral-500"} transition-colors duration-300`} viewBox="0 0 16 11" fill="currentColor">
                             <path d="M11.071.653a.457.457 0 0 0-.304-.102.493.493 0 0 0-.381.178l-6.19 7.636-2.405-2.272a.463.463 0 0 0-.336-.146.47.47 0 0 0-.343.146l-.311.31a.445.445 0 0 0-.14.337c0 .136.046.249.14.337l2.995 2.83a.724.724 0 0 0 .474.178c.176 0 .34-.085.493-.253l6.525-8.056c.094-.112.14-.225.14-.337a.414.414 0 0 0-.14-.302l-.217-.164z" />
                             <path d="M14.071.653a.457.457 0 0 0-.304-.102.493.493 0 0 0-.381.178l-6.19 7.636-1.2-1.136-.312.31 1.79 1.692a.724.724 0 0 0 .474.178c.176 0 .34-.085.493-.253l6.525-8.056c.094-.112.14-.225.14-.337a.414.414 0 0 0-.14-.302l-.217-.164z" />
                           </svg>
@@ -336,19 +394,19 @@ export function Landing() {
                   </div>
                 ))}
 
-                {visibleMessages < CHAT_MESSAGES.length && visibleMessages > 0 && (
+                {isAiTyping && (
                   <div className="flex justify-start animate-fade-in">
                     <div className="bg-[#202C33] rounded-lg rounded-tl-none px-4 py-3 shadow-sm">
-                      <div className="flex gap-1">
-                        <div className="w-2 h-2 rounded-full bg-neutral-500 animate-bounce" style={{ animationDelay: "0ms" }} />
-                        <div className="w-2 h-2 rounded-full bg-neutral-500 animate-bounce" style={{ animationDelay: "150ms" }} />
-                        <div className="w-2 h-2 rounded-full bg-neutral-500 animate-bounce" style={{ animationDelay: "300ms" }} />
+                      <div className="flex gap-1 items-center">
+                        <div className="w-2 h-2 rounded-full bg-neutral-400 animate-bounce" style={{ animationDelay: "0ms" }} />
+                        <div className="w-2 h-2 rounded-full bg-neutral-400 animate-bounce" style={{ animationDelay: "160ms" }} />
+                        <div className="w-2 h-2 rounded-full bg-neutral-400 animate-bounce" style={{ animationDelay: "320ms" }} />
                       </div>
                     </div>
                   </div>
                 )}
 
-                {visibleMessages >= CHAT_MESSAGES.length && (
+                {isDone && (
                   <div className="flex justify-center pt-2 animate-fade-in">
                     <div className="px-4 py-2 rounded-xl bg-emerald-500/20 border border-emerald-500/30 shadow-lg shadow-emerald-500/10">
                       <p className="text-xs text-emerald-400 font-semibold flex items-center gap-2">
@@ -358,14 +416,20 @@ export function Landing() {
                     </div>
                   </div>
                 )}
+
+                <div ref={chatEndRef} />
               </div>
 
               {/* Input bar */}
               <div className="bg-[#202C33] px-3 py-2 flex items-center gap-2">
-                <div className="flex-1 bg-[#2A3942] rounded-full px-4 py-2">
-                  <p className="text-xs text-neutral-500">Mensagem</p>
+                <div className="flex-1 bg-[#2A3942] rounded-full px-4 py-2 min-h-[34px] flex items-center overflow-hidden">
+                  {inputText ? (
+                    <p className="text-xs text-neutral-200 truncate">{inputText}<span className="animate-pulse opacity-70">|</span></p>
+                  ) : (
+                    <p className="text-xs text-neutral-500">Mensagem</p>
+                  )}
                 </div>
-                <div className="w-9 h-9 rounded-full bg-[#00A884] flex items-center justify-center flex-shrink-0">
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-200 ${inputText ? "bg-[#00A884]" : "bg-[#2A3942]"}`}>
                   <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.239 1.816-13.239 1.817-.011 7.912z" />
                   </svg>
