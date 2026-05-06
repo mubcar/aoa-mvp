@@ -205,11 +205,13 @@ export function Landing() {
   const [inputText, setInputText] = useState("");
   const [isAiTyping, setIsAiTyping] = useState(false);
   const [isDone, setIsDone] = useState(false);
-  const chatEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
 
-  // Auto-scroll chat to bottom
+  // Auto-scroll chat container (not the page)
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
   }, [shownMessages, isAiTyping]);
 
   // Main animation loop
@@ -366,6 +368,7 @@ export function Landing() {
 
               {/* Chat area */}
               <div
+                ref={chatContainerRef}
                 className="relative h-[420px] p-3 space-y-2 overflow-y-auto overflow-x-hidden"
                 style={{
                   backgroundColor: "#0d1117",
@@ -417,7 +420,6 @@ export function Landing() {
                   </div>
                 )}
 
-                <div ref={chatEndRef} />
               </div>
 
               {/* Input bar */}
