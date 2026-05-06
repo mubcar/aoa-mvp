@@ -1,73 +1,105 @@
-# AOA — Analyze, Optimize, Automate
+# Hermes Automações
 
-> AI-powered lead recovery platform for home service SMBs in Brazil.  
-> Never miss a lead. Never lose revenue. Built on Claude AI + Solana Pay.
+> Assistente Virtual que responde seu WhatsApp 24h por dia, 7 dias por semana.  
+> Para o Mercado de Plantas — paisagistas, viveiristas e vendedores.
 
-## The Problem
+## O Problema
 
-Home service providers (HVAC, plumbing, solar, landscaping) lose ~40% of inbound leads because they're physically on jobs when prospects call or message on WhatsApp. By the time they check, prospects hired someone else.
+Quem trabalha no mercado de plantas está no viveiro, no projeto, na entrega. Não tem como ficar no celular o dia inteiro. Enquanto isso, clientes mandam mensagem no WhatsApp às 22h, no domingo, no feriado — e ninguém responde. **40% desses clientes vão pro concorrente que respondeu mais rápido.**
 
-## The Solution
+## A Solução
 
-AOA deploys AI agents on WhatsApp and voice that:
-- Answer every message and call instantly, 24/7, in natural Brazilian Portuguese
-- Qualify the prospect (service needed, urgency, location, schedule)
-- Capture the lead into a real-time provider dashboard
-- Generate a Solana Pay USDC deposit link to convert interest into commitment
+Hermes Automações coloca uma IA no WhatsApp da sua empresa que:
+
+- Responde em segundos, 24h por dia, 7 dias por semana
+- Conhece seu catálogo (plantas, vasos, substrato, fertilizante, serviços)
+- Qualifica o cliente (nome, o que quer, localização, horário preferido)
+- Manda o resumo direto no grupo do WhatsApp da sua equipe para fechar a venda
+
+## Como Funciona
+
+1. **Conversa de setup** — Nossa equipe mapeia seu catálogo, preços e área de atendimento. Criamos seu grupo no WhatsApp.
+2. **Configuramos tudo** — A IA é treinada especificamente no seu negócio em até 48h.
+3. **Clientes chegam prontos** — A IA atende, qualifica e manda o resumo no grupo. Só fechar.
 
 ## Tech Stack
 
-- **AI**: Anthropic Claude API (Sonnet) — lead qualification in Portuguese
-- **WhatsApp**: Evolution API (open-source)
-- **Voice**: Vapi.ai — Portuguese voice agents
-- **Backend**: Node.js + Fastify
-- **Database**: Supabase (PostgreSQL + Realtime)
-- **Frontend**: React + Vite + TailwindCSS
-- **Payments**: Solana Pay SDK + USDC escrow
-- **Deploy**: Railway (backend) + Vercel (frontend)
+| Camada | Tecnologia |
+|--------|-----------|
+| Backend | Node.js + Fastify (ESM) |
+| IA | Anthropic Claude API (Sonnet) — qualificação em Português brasileiro |
+| WhatsApp | Evolution API (open-source) |
+| Banco de dados | Supabase (PostgreSQL + Realtime) |
+| Frontend | React + Vite + TailwindCSS |
+| Deploy | Vercel (frontend + backend serverless) |
 
-## Project Structure
+## Estrutura do Projeto
 
 ```
-aoa-mvp/
-├── backend/          # Fastify API server
+hermes-automacoes/
+├── backend/
 │   └── src/
-│       ├── routes/       # API endpoints
-│       ├── services/     # Claude AI, Solana Pay, Evolution API
-│       ├── webhooks/     # WhatsApp & Vapi handlers
-│       ├── config/       # Environment & Supabase client
-│       └── prompts/      # AI system prompts
-├── frontend/         # React dashboard
+│       ├── routes/        # leads, webhooks, test-chat
+│       ├── services/      # Claude AI, Evolution API (WhatsApp)
+│       ├── config/        # Supabase client, features
+│       └── prompts/       # System prompt do assistente virtual
+├── frontend/
 │   └── src/
-│       ├── components/   # Lead cards, metrics, conversation thread
-│       ├── pages/        # Dashboard, lead detail, metrics
-│       ├── hooks/        # Supabase realtime hooks
-│       └── lib/          # Supabase client, API helpers
-├── solana/           # Solana program (escrow)
-├── docs/             # Architecture docs, demo script
-└── CLAUDE.md         # Master build prompt
+│       ├── pages/         # Landing page
+│       └── components/    # UI components
+└── README.md
 ```
 
-## Quick Start
+## Variáveis de Ambiente
+
+```env
+# Backend
+ANTHROPIC_API_KEY=
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+EVOLUTION_API_URL=
+EVOLUTION_API_KEY=
+EVOLUTION_INSTANCE_NAME=
+WEBHOOK_SECRET=
+
+# Frontend
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+VITE_API_URL=
+```
+
+## Rodando Localmente
 
 ```bash
 # Backend
 cd backend
-cp .env.example .env    # Fill in API keys
+cp .env.example .env   # Preencher as chaves
 npm install
 npm run dev
 
 # Frontend
 cd frontend
-cp .env.example .env
 npm install
 npm run dev
 ```
 
-## Hackathon
+## Deploy
 
-Built for the [Colosseum Frontier Hackathon](https://colosseum.com/frontier) — April 6 to May 11, 2026.
+Frontend e backend são deployados separadamente na Vercel:
 
-## License
+```bash
+cd frontend && vercel deploy --prod
+cd backend  && vercel deploy --prod
+```
+
+## Plano
+
+**R$297/mês** — Acesso completo, sem fidelidade, cancele quando quiser.  
+Começa com uma conversa de setup de 30 minutos.
+
+👉 [hermes-automacoes.vercel.app](https://hermes-automacoes.vercel.app)
+
+## Licença
 
 MIT
