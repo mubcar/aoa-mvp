@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import {
   Zap,
   MessageSquare,
-  BarChart3,
   ArrowRight,
   Clock,
   TrendingUp,
@@ -10,11 +9,8 @@ import {
   Bot,
   ChevronRight,
   Check,
-  Star,
   Users,
   Globe,
-  Cpu,
-  Lock,
   Sparkles,
   ArrowUpRight,
   CircleDot,
@@ -109,29 +105,6 @@ const STEPS = [
   },
 ];
 
-const TESTIMONIALS = [
-  {
-    name: "Rodrigo Vieira",
-    role: "Dono — Verde Nobre Paisagismo",
-    text: "Eu estava perdendo clientes porque não conseguia responder no WhatsApp enquanto fazia projeto. Agora a IA responde, coleta tudo e eu só entro em contato pra fechar o orçamento.",
-    avatar: "RP",
-    color: "bg-emerald-600",
-  },
-  {
-    name: "Fernanda Jardins",
-    role: "Espaço Verde SP",
-    text: "O melhor é que a IA já sabe quais plantas, vasos e substratos eu trabalho e os preços. O cliente chega na conversa já informado. Economia de tempo enorme.",
-    avatar: "FJ",
-    color: "bg-blue-600",
-  },
-  {
-    name: "Marcelo Flores",
-    role: "Proprietário — Flora Tropical Campinas",
-    text: "Tinha medo de parecer robótico pro cliente. Mas o atendimento ficou mais profissional do que quando eu mesmo respondia às pressas do canteiro de obras.",
-    avatar: "MF",
-    color: "bg-violet-600",
-  },
-];
 
 const FAQ = [
   {
@@ -165,7 +138,7 @@ const CHAT_MESSAGES = [
   },
   {
     from: "ai",
-    text: "Oi! Sou a assistente virtual da Flora Multi Verde 😊 Que projeto gostoso! Varanda com sol direto tem ótimas opções — suculentas, lavanda, pata-de-vaca, ixora. Você prefere mais verde ou gosta de flores também?",
+    text: "Oi! Sou a recepcionista digital da Flora Multi Verde 😊 Que projeto gostoso! Varanda com sol direto tem ótimas opções — suculentas, lavanda, pata-de-vaca, ixora. Você prefere mais verde ou gosta de flores também?",
     time: "15:10",
   },
   {
@@ -197,7 +170,6 @@ function FloatingOrb({ className, color, size = "w-64 h-64" }) {
 }
 
 export function Landing() {
-  const [email, setEmail] = useState("");
   const [openFaq, setOpenFaq] = useState(null);
 
   // Chat animation state
@@ -314,7 +286,7 @@ export function Landing() {
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Assistente Virtual que responde seu WhatsApp 24 horas por dia, 7 dias por semana imediatamente. Conhece seu catálogo, qualifica o cliente e manda o resumo no grupo da sua equipe para fechar a compra.
+            Recepcionista Digital que responde seu WhatsApp 24/7 na hora. Conhece seu catálogo, qualifica o cliente e manda o resumo no grupo da sua equipe para fechar a compra.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
@@ -733,26 +705,15 @@ export function Landing() {
             <p className="text-neutral-500 mb-8">
               Agende uma conversa de 30 minutos. Nossa equipe avalia seu catálogo e configura tudo.
             </p>
-            <form
-              onSubmit={(e) => { e.preventDefault(); window.open("https://calendly.com/mubcarvalho/30min", "_blank"); }}
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+            <a
+              href="https://calendly.com/mubcarvalho/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-semibold rounded-xl hover:opacity-90 transition-opacity text-sm shadow-lg shadow-emerald-500/20"
             >
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="seu@email.com"
-                required
-                className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-emerald-500/30 focus:ring-1 focus:ring-emerald-500/20"
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-semibold rounded-xl hover:opacity-90 transition-opacity text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20"
-              >
-                Agendar conversa
-                <ArrowUpRight className="w-4 h-4" />
-              </button>
-            </form>
+              Agendar conversa de setup
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </section>
