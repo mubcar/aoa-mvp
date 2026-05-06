@@ -2,9 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+html, body {
   font-family: "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 .line-clamp-2 {
