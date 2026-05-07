@@ -554,7 +554,7 @@ export function Landing() {
               Acesso completo
             </span>
             <div className="mb-2">
-              <span className="text-6xl font-bold tracking-tight">R$99</span>
+              <span className="text-6xl font-bold tracking-tight">R$97</span>
               <span className="text-neutral-500 text-lg">/mês</span>
             </div>
             <p className="text-sm text-neutral-500 mb-8">Após conversa de setup obrigatória</p>
